@@ -1,6 +1,6 @@
 "use client"
 
-import { PropsWithChildren, useEffect, useState } from "react";
+import { PropsWithChildren, useState } from "react";
 import { classNames } from "../utils/classnames";
 import { Tooltip } from 'react-tooltip'
 
@@ -32,7 +32,7 @@ export default function LinkButton({
     }
 
     setCopied(true);
-    setTimeout(() => setCopied(false), 800);
+    setTimeout(() => setCopied(false), durationCopiableMs);
   };
 
   const redirect = () => {

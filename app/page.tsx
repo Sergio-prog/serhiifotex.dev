@@ -84,7 +84,7 @@ export default function Home() {
               className="text-transparent bg-clip-text bg-gradient-to-b from-[#393E46]/50
              to-[#393E46]/20 [-webkit-background-clip:text] [-webkit-text-fill-color:transparent]"
             >
-              I'm too lazy to make a good design. sry {":)"}
+              I`m too lazy to make a good design. sry {":)"}
             </p>
           </div>
         </div>
