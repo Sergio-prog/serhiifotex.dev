@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import 'react-tooltip/dist/react-tooltip.css'
 import { Analytics } from "@vercel/analytics/next";
+import { ToastContainer } from 'react-toastify';
 
 const inter = Inter({
   variable: "--font-inter",
@@ -26,6 +27,7 @@ export default function RootLayout({
         className={`antialiased`}
       >
         {children}
+        <ToastContainer />
         <Analytics />
       </body>
     </html>
