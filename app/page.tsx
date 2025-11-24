@@ -68,8 +68,8 @@ export default function Home() {
 
             <LinkButton
               className="justify-center md:justify-start group"
-              text="@FotexFN"
-              link="https://x.com/FotexFN"
+              text="@0xFotex"
+              link="https://x.com/0xFotex"
               tooltip="Twitter"
             >
               <XLogoIcon className="w-7 h-7 lg:w-8 lg:h-8 group-hover:animate-(--animate-small-bounce)" />
