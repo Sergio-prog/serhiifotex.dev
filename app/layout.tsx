@@ -12,8 +12,9 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Portolio website",
-  description: "",
+  title: "Software Engenieer — Serhii Nesterov",
+  description:
+    "Personal website of Software engeieer. Idk what else. Just a website with CV and socials. Yeah.",
   authors: [{ name: "Serhii Nesterov" }],
   category: "Personal website",
   creator: "Serhii Nestserov",
