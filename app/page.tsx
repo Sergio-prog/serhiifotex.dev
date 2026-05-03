@@ -7,13 +7,11 @@ import {
   GithubLogoIcon,
   LinkedinLogoIcon,
   QuestionIcon,
-  QuestionMarkIcon,
   ReadCvLogoIcon,
   XLogoIcon,
 } from "@phosphor-icons/react/dist/ssr";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
-import { Snowfall } from "react-snowfall";
 
 export default function Home() {
   const onSaveFile = (e: KeyboardEvent) => {
@@ -38,7 +36,6 @@ export default function Home() {
 
   return (
     <div className="relative w-screen h-screen">
-      <Snowfall snowflakeCount={60} speed={[2.5, 3.5]} opacity={[0.7, 1]} radius={[0.8, 2.8]} wind={[-0.5, 1.5]} />
       <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
         <div className="relative lg:w-[890px] w-screen px-4 text-center">
           <h1 className="lg:text-[64px] md:text-[48px] text-[36px] font-bold absolute -top-[142px] w-full left-1/2 transform -translate-x-1/2 text-nowrap">
