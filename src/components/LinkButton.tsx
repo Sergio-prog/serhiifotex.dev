@@ -1,8 +1,6 @@
-"use client";
-
-import { PropsWithChildren, useRef, useState, MouseEvent } from "react";
-import { classNames } from "../utils/classnames";
+import { MouseEvent, PropsWithChildren, useRef, useState } from "react";
 import { Tooltip } from "react-tooltip";
+import { classNames } from "../utils/classnames";
 
 interface LinkButtonProps extends PropsWithChildren {
   text: string;
@@ -23,38 +21,32 @@ export default function LinkButton({
   durationCopiableMs = 1000,
 }: LinkButtonProps) {
   const [copied, setCopied] = useState(false);
-  const divRef = useRef<HTMLButtonElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
   const [borderOpacity, setBorderOpacity] = useState(0);
   const [position, setPosition] = useState({ x: 0, y: 0 });
 
   const handleCopyClick = async () => {
     try {
       await navigator.clipboard.writeText(link);
-    } catch (e) {
-      // ignore - copying isn't required for the visual effect
+    } catch {
+      // Copying is optional; the click still gives visual feedback.
     }
 
     setCopied(true);
-    setTimeout(() => setCopied(false), durationCopiableMs);
+    window.setTimeout(() => setCopied(false), durationCopiableMs);
   };
 
   const redirect = () => {
     window.open(link, "_blank", "noreferrer noopener");
   };
 
-  const handleMouseMove = (e: MouseEvent) => {
-    if (!divRef.current) return;
+  const handleMouseMove = (event: MouseEvent) => {
+    if (!buttonRef.current) {
+      return;
+    }
 
-    const rect = divRef.current.getBoundingClientRect();
-    setPosition({ x: e.clientX - rect.left, y: e.clientY - rect.top });
-  };
-
-  const handleMouseEnter = () => {
-    setBorderOpacity(1);
-  };
-
-  const handleMouseLeave = () => {
-    setBorderOpacity(0);
+    const rect = buttonRef.current.getBoundingClientRect();
+    setPosition({ x: event.clientX - rect.left, y: event.clientY - rect.top });
   };
 
   return (
@@ -71,16 +63,16 @@ export default function LinkButton({
         }}
       />
       <button
-        ref={divRef}
+        ref={buttonRef}
         className={classNames(
-          "w-full min-w-0 h-[56px] lg:py-3 py-2 lg:px-4 px-3 bg-[#EFE4D326] rounded-2xl",
-          "hover:ring-2 hover:cursor-pointer hover:ring-[#EFE4D340] max-md:ring-2 max-md:ring-[#EFE4D340] hover:scale-[101.8%]",
-          "transition-transform ease-in-out duration-200 flex items-center relative overflow-hidden",
+          "relative flex h-[56px] w-full min-w-0 items-center overflow-hidden rounded-2xl bg-[#EFE4D326] px-3 py-2",
+          "transition-transform duration-200 ease-in-out hover:scale-[101.8%] hover:cursor-pointer hover:ring-2 hover:ring-[#EFE4D340]",
+          "max-md:ring-2 max-md:ring-[#EFE4D340] lg:px-4 lg:py-3",
           className
         )}
         onMouseMove={handleMouseMove}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
+        onMouseEnter={() => setBorderOpacity(1)}
+        onMouseLeave={() => setBorderOpacity(0)}
         onClick={isCopiable ? handleCopyClick : redirect}
         data-tooltip-id="link-button"
         data-tooltip-content={copied ? "Copied!" : tooltip}
@@ -94,9 +86,9 @@ export default function LinkButton({
           }}
         />
 
-        <div className="relative z-10 flex gap-2 items-center min-w-0">
+        <div className="relative z-10 flex min-w-0 items-center gap-2">
           {children}
-          <p className="lg:text-xl text-md font-medium leading-normal truncate">
+          <p className="text-md truncate font-medium leading-normal lg:text-xl">
             {text}
           </p>
         </div>
