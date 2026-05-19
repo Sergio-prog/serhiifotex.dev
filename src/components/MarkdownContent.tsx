@@ -181,7 +181,9 @@ function parseMarkdown(source: string) {
 
 function renderInline(text: string): ReactNode[] {
   const matches = Array.from(
-    text.matchAll(/(`[^`]+`|\*\*[^*]+\*\*|\*[^*]+\*|\[[^\]]+]\([^)]+\))/g)
+    text.matchAll(
+      /(`[^`]+`|\*\*[^*]+\*\*|\*[^*]+\*|\[[^\]]+]\([^)]+\)|<https?:\/\/[^>\s]+>|https?:\/\/[^\s<]+)/g
+    )
   );
 
   if (!matches.length) {
@@ -226,12 +228,49 @@ function renderInlineToken(value: string, key: number) {
   const link = value.match(/^\[([^\]]+)]\(([^)]+)\)$/);
 
   if (link) {
+    return renderLink(link[2], renderInline(link[1]), key);
+  }
+
+  const autolink = value.match(/^<(.+)>$/);
+
+  if (autolink) {
+    return renderLink(autolink[1], autolink[1], key);
+  }
+
+  if (value.startsWith("http://") || value.startsWith("https://")) {
+    const { href, trailing } = splitTrailingPunctuation(value);
+
     return (
-      <a key={key} href={link[2]} target="_blank" rel="noreferrer">
-        {renderInline(link[1])}
-      </a>
+      <span key={key}>
+        {renderLink(href, href, `${key}-link`)}
+        {trailing}
+      </span>
     );
   }
 
   return value;
+}
+
+function renderLink(href: string, children: ReactNode, key: string | number) {
+  const external = /^https?:\/\//.test(href);
+
+  return (
+    <a
+      key={key}
+      href={href}
+      target={external ? "_blank" : undefined}
+      rel={external ? "noreferrer" : undefined}
+    >
+      {children}
+    </a>
+  );
+}
+
+function splitTrailingPunctuation(value: string) {
+  const match = value.match(/^(.+?)([.,!?;:]+)?$/);
+
+  return {
+    href: match?.[1] ?? value,
+    trailing: match?.[2] ?? "",
+  };
 }
