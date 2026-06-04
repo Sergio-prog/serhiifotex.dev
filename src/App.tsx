@@ -48,8 +48,8 @@ export default function App() {
   }
 
   return (
-    <main className="relative min-h-screen w-screen overflow-x-hidden">
-      <section className="relative h-screen w-screen">
+    <main className="relative min-h-screen w-full overflow-x-hidden">
+      <section className="relative h-screen w-full">
         <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform">
           <div className="relative w-screen px-4 text-center lg:w-[890px]">
             <h1 className="absolute -top-[142px] left-1/2 w-full -translate-x-1/2 transform text-nowrap text-[36px] font-bold md:text-[48px] lg:text-[64px]">

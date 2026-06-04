@@ -2,6 +2,7 @@
   "name": "portfolio-site",
   "version": "0.1.0",
   "private": true,
+  "description": "💼 Personal portfolio — built with Vite, React, TypeScript, and Tailwind CSS. Features a blog, CV, and contact links.",
   "packageManager": "pnpm@9.15.3",
   "scripts": {
     "dev": "vite",
