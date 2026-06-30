@@ -47,7 +47,7 @@ export default function PostPage({ post }: { post: BlogPost }) {
   }, [post]);
 
   return (
-    <main className="min-h-screen bg-[#222831] px-4 py-8 text-[#dfd0b8] sm:px-6 lg:px-8">
+    <main className="min-h-screen bg-[#222831] px-4 py-8 text-[#dfd0b8] sm:px-6 lg:px-8" id="main-content">
       <article className="mx-auto max-w-3xl">
         <a
           href="#posts"

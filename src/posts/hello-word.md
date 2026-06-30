@@ -1,26 +1,30 @@
 ---
-title: "Hello, guys"
+title: "Hello, World! — a proper introduction"
 date: "2026-05-18"
-description: "A short introduction — who I am, what I do, and what I’m working on."
+description: "Who I am, what I do, and what this blog is about."
 tags: ["personal"]
 ---
 
 # Hello, World! 👋
 
-I’m Serhii Nesterov — a software engineer based in Europe. I spend most of my time writing code that touches the web, blockchain infrastructure, and backend systems.
+I'm Serhii Nesterov — a software engineer working at the intersection of smart contracts, backend systems, and developer tooling.
 
-## Background
+## A bit of background
 
-I started with web development and gradually moved deeper into systems programming. These days I work across the stack: smart contracts, APIs, automation, and the occasional CLI tool. I like small, sharp tools that do one thing well.
+I've been building software professionally for several years, with a focus on:
 
-## What I’m working on now
+- **Smart contract development** — writing and auditing Solidity contracts, working with EVM chains, and building DeFi primitives.
+- **Backend engineering** — designing APIs, data pipelines, and distributed systems in TypeScript and Go.
+- **Developer tooling** — creating CLI tools, Discord bots, and automation that makes other developers' lives easier.
 
-- **ReconSearch** — a crypto research AI agent that turns a ticker or contract address into a structured briefing in seconds.
-- **Fram** — a media workshop with CLI, REST, and Telegram adapters built around a shared TypeScript core.
-- **Finance Tracker** — a personal dashboard for transaction categorization and spending analytics.
+## What I'm working on now
 
-## Why this site exists
+**ReconSearch** — an AI-powered crypto research agent that turns a ticker or contract address into a structured breakdown: on-chain data, social sentiment, news, and red flags. It's the kind of tool I wished existed every time I was researching a new token.
 
-This is a place for notes, experiments, and project updates. I’m not a prolific writer, but when I learn something worth sharing — or build something worth showing — it’ll end up here.
+**Fram** — a media workshop toolkit built around a shared core with three adapter surfaces: a CLI for local scripting, an HTTP API for integration, and a Discord bot for community use. More on this in a dedicated post.
 
-If you want to talk shop, find me on [GitHub](https://github.com/Sergio-prog), [X](https://x.com/0xFotex), or [LinkedIn](https://www.linkedin.com/in/sergey-nesterov/).
+## This blog
+
+This is my personal notebook — notes, drafts, and engineering traps I've stepped into so you don't have to. I'll write about smart contract gotchas, Go concurrency patterns, TypeScript type gymnastics, and whatever else I'm figuring out.
+
+Stick around, there's more coming.

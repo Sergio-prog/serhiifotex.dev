@@ -18,8 +18,8 @@ const projects: Project[] = [
   {
     name: "Fram",
     description:
-      "Media workshop toolkit — shared core with CLI, HTTP API, and Discord bot adapters. Process images, video, and audio through a unified pipeline.",
-    tags: ["Go", "CLI", "API", "Discord Bot"],
+      "Media workshop toolkit — shared TypeScript core with CLI (Typer), HTTP API (FastAPI), and Telegram bot (aiogram) adapters. Process images and video through a unified pipeline.",
+    tags: ["TypeScript", "Python", "CLI", "FastAPI", "Telegram Bot"],
     href: "https://github.com/Sergio-prog/fram",
   },
   {
