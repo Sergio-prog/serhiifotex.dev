@@ -11,6 +11,11 @@
   --font-sans: var(--font-inter);
   --font-mono: var(--font-inter);
 
+  --color-wabi-dark: #222831;
+  --color-wabi-light: #dfd0b8;
+  --color-wabi-mid: #393E46;
+  --color-wabi-accent: #f4e7c5;
+
   --animate-small-bounce: small-bounce 0.7s alternate infinite;
 
   @keyframes small-bounce {
@@ -49,11 +54,23 @@
   }
 }
 
+/* Dark mode: system preference */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="light"]) {
     --background: #222831;
     --foreground: #dfd0b8;
   }
+}
+
+/* Manual override via data-theme attribute */
+:root[data-theme="dark"] {
+  --background: #222831 !important;
+  --foreground: #dfd0b8 !important;
+}
+
+:root[data-theme="light"] {
+  --background: #f4e7c5 !important;
+  --foreground: #222831 !important;
 }
 
 html,
@@ -70,6 +87,34 @@ body {
   color: var(--foreground);
   font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     sans-serif;
+}
+
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 0;
+  z-index: 1000;
+  padding: 10px 20px;
+  background: #dfd0b8;
+  color: #222831;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: top 0.15s ease;
+  border-radius: 0 0 8px 0;
+}
+
+.skip-link:focus {
+  top: 0;
+  outline: 2px solid #f4e7c5;
+  outline-offset: 2px;
+}
+
+/* Focus styles for keyboard users */
+*:focus-visible {
+  outline: 2px solid #f4e7c5;
+  outline-offset: 2px;
+  border-radius: 4px;
 }
 
 .animate-fall {

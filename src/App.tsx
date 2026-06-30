@@ -11,7 +11,9 @@ import { toast } from "react-toastify";
 import BlogSection from "./components/BlogSection";
 import LinkButton from "./components/LinkButton";
 import PostPage from "./components/PostPage";
+import ProjectsSection from "./components/ProjectsSection";
 import ScrollHint from "./components/ScrollHint";
+import ThemeToggle from "./components/ThemeToggle";
 import { allPosts } from "./content/posts";
 
 export default function App() {
@@ -44,11 +46,29 @@ export default function App() {
   }, []);
 
   if (post) {
-    return <PostPage post={post} />;
+    return (
+      <>
+        <a
+          href="#main-content"
+          className="fixed left-4 top-4 z-[999] -translate-y-full rounded-full border border-[#dfd0b833] bg-[#222831] px-4 py-2 text-sm font-semibold text-[#dfd0b8] shadow-lg transition focus:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#dfd0b8]"
+        >
+          Skip to content
+        </a>
+        <ThemeToggle />
+        <PostPage post={post} />
+      </>
+    );
   }
 
   return (
-    <main className="relative min-h-screen w-full overflow-x-hidden">
+    <main className="relative min-h-screen w-full overflow-x-hidden" id="main-content">
+      <a
+        href="#main-content"
+        className="fixed left-4 top-4 z-[999] -translate-y-full rounded-full border border-[#dfd0b833] bg-[#222831] px-4 py-2 text-sm font-semibold text-[#dfd0b8] shadow-lg transition focus:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#dfd0b8]"
+      >
+        Skip to content
+      </a>
+      <ThemeToggle />
       <section className="relative h-screen w-full">
         <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform">
           <div className="relative w-screen px-4 text-center lg:w-[890px]">
@@ -124,6 +144,7 @@ export default function App() {
         </div>
         <ScrollHint />
       </section>
+      <ProjectsSection />
       <BlogSection />
     </main>
   );

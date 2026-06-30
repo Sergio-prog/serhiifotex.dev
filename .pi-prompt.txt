@@ -1,0 +1,60 @@
+You are improving a personal portfolio site (serhiifotex.dev). The site is a Vite + React + TypeScript + Tailwind CSS v4 SPA deployed on Vercel.
+
+## Project Structure
+- src/App.tsx — main app with profile section + hash routing + blog
+- src/components/BlogSection.tsx — blog post list with tag filtering
+- src/components/LinkButton.tsx — glowing link card
+- src/components/PostPage.tsx — single blog post view
+- src/components/MarkdownContent.tsx — custom markdown renderer
+- src/content/posts.ts — loads .md files from src/posts/ with frontmatter
+- src/posts/ — markdown blog posts (hello-word.md, recon-search.md)
+- src/styles/globals.css — Tailwind + custom styles (wabi-sabi dark theme)
+- index.html — entry HTML
+
+## Tech Stack
+- Vite 7, React 19, TypeScript 5.9, Tailwind CSS v4
+- Phosphor Icons, react-toastify, react-tooltip
+- @vercel/analytics
+
+## Current Pain Points / Missing Features
+1. No Open Graph / social meta tags — sharing looks terrible
+2. No dark mode toggle — only uses prefers-color-scheme, no manual control
+3. No Projects section — the site only has social links and blog, no showcase of actual work
+4. Very thin blog content — only 2 posts, one is literally "Hello, World!"
+5. No sitemap or RSS feed
+6. Missing keyboard navigation / accessibility basics
+
+## Improvements to Make (in order of priority)
+
+### P1: Add Open Graph meta tags
+In index.html, add proper og:title, og:description, og:image, og:url, twitter:card tags. Create a default og:image (use a simple CSS/SVG generated image or just reference an existing public asset). Make PostPage.tsx dynamically update document title and meta when viewing a post (use useEffect to set document.title and create/update meta tags).
+
+### P2: Add Projects section to homepage
+Between the profile links and the blog section, add a "Projects" section showcasing 3-4 real projects:
+- ReconSearch (crypto research AI agent) — reconsear.ch
+- Fram (media workshop CLI/API/bot) — github.com/Sergio-prog/fram
+- Finance Tracker (personal project)
+- Any other relevant project
+Each project card: name, short description, tech tags, link to repo or live site. Use the same card style as blog posts but with a project icon/indicator.
+
+### P3: Add dark mode toggle
+Add a small toggle button (sun/moon icon from Phosphor Icons) in the top-right corner of the page. Store preference in localStorage. Use a data-theme attribute on html or a class to override prefers-color-scheme. Update globals.css to support both light and dark with manual override.
+
+### P4: Better blog content
+Write a new blog post about Fram — what it is, why you built it, the architecture (shared core + 3 adapters), and any lessons learned. Add it as src/posts/fram.md with proper frontmatter.
+Update hello-word.md to be more substantial — introduce yourself, your background, what you're working on. Not just "Hello, World!".
+
+### P5: Accessibility basics
+- Add proper aria-labels to LinkButton components
+- Ensure all interactive elements have focus states
+- Add skip-to-content link for keyboard users
+
+## Rules
+- Do NOT add new npm dependencies unless absolutely necessary
+- Keep the existing wabi-sabi color palette (#222831, #dfd0b8, #393E46, #f4e7c5)
+- Build must pass: pnpm build (tsc + vite build)
+- Use existing patterns — follow the code style in the repo
+- Do NOT break existing functionality (blog, routing, social links)
+- Prefer TypeScript over any
+
+After making changes, run pnpm build to verify everything compiles.

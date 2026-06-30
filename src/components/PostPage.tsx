@@ -1,8 +1,51 @@
 import { ArrowLeftIcon, ClockIcon } from "@phosphor-icons/react";
+import { useEffect } from "react";
 import { BlogPost } from "../content/posts";
 import MarkdownContent from "./MarkdownContent";
 
+function setMeta(name: string, content: string) {
+  let el = document.querySelector(`meta[name="${name}"], meta[property="${name}"]`);
+
+  if (el) {
+    el.setAttribute("content", content);
+    return;
+  }
+
+  el = document.createElement("meta");
+
+  if (name.startsWith("og:") || name.startsWith("twitter:")) {
+    el.setAttribute("property", name);
+  } else {
+    el.setAttribute("name", name);
+  }
+
+  el.setAttribute("content", content);
+  document.head.appendChild(el);
+}
+
 export default function PostPage({ post }: { post: BlogPost }) {
+  useEffect(() => {
+    const title = `${post.title} — Serhii Nesterov`;
+    const url = `https://serhiifotex.dev/#/posts/${post.slug}`;
+    const desc = post.description;
+
+    document.title = title;
+    setMeta("og:title", title);
+    setMeta("og:description", desc);
+    setMeta("og:url", url);
+    setMeta("twitter:title", title);
+    setMeta("twitter:description", desc);
+
+    return () => {
+      document.title = "Serhii Nesterov — Software Engineer";
+      setMeta("og:title", "Serhii Nesterov — Software Engineer");
+      setMeta("og:description", "Personal portfolio of Serhii Nesterov — software engineer, smart contract, and backend developer.");
+      setMeta("og:url", "https://serhiifotex.dev/");
+      setMeta("twitter:title", "Serhii Nesterov — Software Engineer");
+      setMeta("twitter:description", "Personal portfolio of Serhii Nesterov — software engineer, smart contract, and backend developer.");
+    };
+  }, [post]);
+
   return (
     <main className="min-h-screen bg-[#222831] px-4 py-8 text-[#dfd0b8] sm:px-6 lg:px-8">
       <article className="mx-auto max-w-3xl">
