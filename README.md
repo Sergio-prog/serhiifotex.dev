@@ -17,7 +17,7 @@
     single-page app, served fast.
   </p>
   <p>
-    <a href="https://serhii-nesterov.dev"><strong>🌐 Live site »</strong></a>
+    <a href="https://serhiifotex.dev"><strong>🌐 Live site »</strong></a>
   </p>
 </div>
 
@@ -64,29 +64,6 @@ pnpm build
 pnpm preview
 ```
 
-> Requires [pnpm](https://pnpm.io/installation).
-
-## 📁 Project Structure
-
-```
-src/
-├── App.tsx                  # Main app (profile + routing)
-├── main.tsx                 # Entry point
-├── components/
-│   ├── BlogSection.tsx      # Blog post list with tag filtering
-│   ├── LinkButton.tsx       # Glowing link card component
-│   ├── MarkdownContent.tsx  # Markdown renderer for blog posts
-│   ├── PostPage.tsx         # Single post view
-│   └── ScrollHint.tsx       # Scroll-down indicator
-├── content/
-│   └── posts.ts             # Post loader & parser (frontmatter → BlogPost)
-├── posts/                   # Markdown blog posts
-├── styles/
-│   └── globals.css          # Tailwind + custom styles
-└── utils/
-    └── classnames.ts        # Tiny classname joiner
-```
-
 ## 📝 Writing a Post
 
 Add a `.md` file to `src/posts/` with frontmatter:
@@ -110,15 +87,6 @@ Set `hidden: true` to keep a draft unpublished.
 ```bash
 pnpm lint
 ```
-
-## 🎨 Design Notes
-
-- Color palette inspired by Japanese _wabi-sabi_ warmth — dark slate `#222831`
-  with beige accents `#dfd0b8`.
-- The "Reach me here" pop-out illustration is a decorative SVG.
-- No heavy animation frameworks — just CSS transitions and one custom keyframe
-  for the bounce effect on hover.
-
 ---
 
 <div align="center">
