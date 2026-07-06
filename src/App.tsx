@@ -11,8 +11,10 @@ import { toast } from "react-toastify";
 import BlogSection from "./components/BlogSection";
 import LinkButton from "./components/LinkButton";
 import PostPage from "./components/PostPage";
+import ProjectsSection from "./components/ProjectsSection";
 import ScrollHint from "./components/ScrollHint";
 import { allPosts } from "./content/posts";
+import { trackGlow } from "./utils/glow";
 
 export default function App() {
   const route = useHashRoute();
@@ -60,8 +62,11 @@ export default function App() {
             </h2>
 
             <div
-              className="relative grid w-full grid-cols-1 items-center gap-4 rounded-4xl bg-[#393E46] px-6 py-5 text-left ring-1 ring-[#e1dace40] max-md:h-fit max-md:min-h-[180px] sm:grid-cols-2 md:min-h-[90px] md:grid-cols-4 lg:px-4"
+              onMouseMove={handleCardMouseMove}
+              onMouseLeave={handleCardMouseLeave}
+              className="glow-card relative grid w-full grid-cols-1 items-center gap-4 rounded-4xl bg-[#393E46] px-6 py-5 text-left ring-1 ring-[#e1dace40] transition-transform duration-200 ease-out will-change-transform max-md:h-fit max-md:min-h-[180px] sm:grid-cols-2 md:min-h-[90px] md:grid-cols-4 lg:px-4"
             >
+              <div className="glow-overlay" />
               <img
                 src="/image/reach-me-here.svg"
                 alt="Reach me here"
@@ -124,9 +129,30 @@ export default function App() {
         </div>
         <ScrollHint />
       </section>
+      <ProjectsSection />
       <BlogSection />
+      <footer className="px-4 pb-10 pt-6 text-center text-xs text-[#dfd0b8]/35">
+        © {new Date().getFullYear()} Serhii Nesterov
+      </footer>
     </main>
   );
+}
+
+function handleCardMouseMove(event: React.MouseEvent<HTMLDivElement>) {
+  trackGlow(event);
+
+  const card = event.currentTarget;
+  const rect = card.getBoundingClientRect();
+  const x = event.clientX - rect.left;
+  const y = event.clientY - rect.top;
+  const tiltX = ((y - rect.height / 2) / rect.height) * -3.5;
+  const tiltY = ((x - rect.width / 2) / rect.width) * 3.5;
+
+  card.style.transform = `perspective(900px) rotateX(${tiltX}deg) rotateY(${tiltY}deg)`;
+}
+
+function handleCardMouseLeave(event: React.MouseEvent<HTMLDivElement>) {
+  event.currentTarget.style.transform = "";
 }
 
 function useHashRoute() {

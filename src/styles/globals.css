@@ -1,8 +1,9 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #222831;
+  --foreground: #dfd0b8;
+  color-scheme: dark;
 }
 
 @theme inline {
@@ -10,6 +11,11 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-inter);
   --font-mono: var(--font-inter);
+
+  --color-wabi-dark: #222831;
+  --color-wabi-light: #dfd0b8;
+  --color-wabi-mid: #393E46;
+  --color-wabi-accent: #f4e7c5;
 
   --animate-small-bounce: small-bounce 0.7s alternate infinite;
 
@@ -49,13 +55,6 @@
   }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #222831;
-    --foreground: #dfd0b8;
-  }
-}
-
 html,
 body,
 #root {
@@ -70,6 +69,49 @@ body {
   color: var(--foreground);
   font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     sans-serif;
+}
+
+*:focus-visible {
+  outline: 2px solid #f4e7c5;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+::selection {
+  background: #dfd0b8;
+  color: #222831;
+}
+
+.projects-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(223 208 184 / 0.28) transparent;
+}
+
+.projects-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.projects-scroll::-webkit-scrollbar-thumb {
+  background: rgb(223 208 184 / 0.28);
+  border-radius: 999px;
+}
+
+.glow-overlay {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  background: radial-gradient(
+    340px circle at var(--glow-x, 50%) var(--glow-y, 50%),
+    rgb(244 231 197 / 0.07),
+    transparent 65%
+  );
+}
+
+.glow-card:hover .glow-overlay {
+  opacity: 1;
 }
 
 .animate-fall {
@@ -171,13 +213,10 @@ body {
 }
 
 .post-markdown img {
-  max-height: 420px;
-  width: 100%;
-  border: 1px solid rgb(223 208 184 / 0.16);
+  display: block;
+  max-height: 480px;
+  max-width: 100%;
   border-radius: 1.25rem;
-  background: rgb(57 62 70 / 0.3);
-  object-fit: contain;
-  padding: 1rem;
 }
 
 .post-markdown hr {

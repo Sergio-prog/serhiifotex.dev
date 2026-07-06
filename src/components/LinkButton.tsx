@@ -77,6 +77,7 @@ export default function LinkButton({
         data-tooltip-id="link-button"
         data-tooltip-content={copied ? "Copied!" : tooltip}
         data-tooltip-place="top"
+        aria-label={copied ? "Copied!" : `${tooltip}: ${text}`}
       >
         <div
           className="pointer-events-none absolute -inset-[1px] rounded-[17px] transition-opacity duration-300"
