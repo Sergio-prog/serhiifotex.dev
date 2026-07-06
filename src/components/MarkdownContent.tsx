@@ -15,7 +15,7 @@ type MarkdownBlock =
 
 export default function MarkdownContent({ source }: { source: string }) {
   return (
-    <div className="post-markdown py-10">
+    <div className="post-markdown py-10 flex-row gap">
       {parseMarkdown(source).map((block, index) => (
         <MarkdownBlockView key={index} block={block} />
       ))}
