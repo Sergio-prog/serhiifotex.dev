@@ -8,13 +8,7 @@ description: "Who I am, what I do, and what this blog is about."
 
 I'm Serhii Nesterov — a software engineer working around smart contracts, backends, and developer tooling.
 
-## A bit of background
-
-I've been building software professionally for several years. Most of my time goes into three things:
-
-- Smart contracts: Solidity, EVM chains, DeFi primitives.
-- Backends: APIs, bots, and data pipelines, mostly in TypeScript and Python.
-- Tooling: CLIs and small utilities that save me (and hopefully you) some time.
+Most of my time goes into three things: smart contracts (Solidity, EVM, DeFi primitives), backends (mostly TypeScript and Python), and tooling — CLIs, bots, and small utilities that save me some time.
 
 ## What I'm working on now
 
@@ -24,6 +18,6 @@ I've been building software professionally for several years. Most of my time go
 
 ## This blog
 
-This is my personal notebook: notes, drafts, and engineering traps I've stepped into so you don't have to. Expect smart contract gotchas, backend war stories, and whatever else I'm figuring out at the moment.
+My personal notebook: notes, drafts, and engineering traps I've stepped into so you don't have to.
 
 Stick around.

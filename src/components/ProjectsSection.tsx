@@ -27,7 +27,15 @@ const projects: Project[] = [
     stack: ["TypeScript", "Next.js", "AI agents"],
     createdAt: "2026-04-20",
     site: "https://reconsear.ch",
-    image: "https://reconsear.ch/social-preview.png",
+    image: "/image/projects/reconsearch.png",
+  },
+  {
+    name: "ultra.convert",
+    description:
+      "Self-hosted file conversion workbench: images, video, audio, archives and PDFs, plus a media downloader, URL screenshots and a private pastebin. Files never leave the machine.",
+    stack: ["TypeScript", "TanStack Start", "Bun", "FFmpeg"],
+    createdAt: "2026-07-06",
+    image: "/image/projects/ultra-converter.png",
   },
   {
     name: "chainq",
@@ -36,7 +44,7 @@ const projects: Project[] = [
     stack: ["Python", "CLI", "EVM + Solana"],
     createdAt: "2026-07-02",
     repo: "https://github.com/Sergio-prog/chainq",
-    image: "https://opengraph.githubassets.com/1/Sergio-prog/chainq",
+    image: "/image/projects/chainq.svg",
   },
   {
     name: "Ultra Tokenizer",
@@ -45,7 +53,7 @@ const projects: Project[] = [
     stack: ["TypeScript", "React", "BPE"],
     createdAt: "2026-07-06",
     repo: "https://github.com/Sergio-prog/ultra-tokenizer",
-    image: "https://opengraph.githubassets.com/1/Sergio-prog/ultra-tokenizer",
+    image: "/image/projects/ultra-tokenizer.svg",
   },
   {
     name: "Fram",
@@ -54,7 +62,7 @@ const projects: Project[] = [
     stack: ["Python", "FastAPI", "aiogram", "FFmpeg"],
     createdAt: "2026-05-16",
     repo: "https://github.com/Sergio-prog/fram",
-    image: "https://opengraph.githubassets.com/1/Sergio-prog/fram",
+    image: "/image/projects/fram.png",
   },
   {
     name: "Finance Tracker",
@@ -63,7 +71,7 @@ const projects: Project[] = [
     stack: ["TypeScript", "React", "Node.js"],
     createdAt: "2026-05-27",
     repo: "https://github.com/Sergio-prog/finance-tracker",
-    image: "https://opengraph.githubassets.com/1/Sergio-prog/finance-tracker",
+    image: "/image/projects/finance-tracker.png",
   },
 ];
 
@@ -95,8 +103,8 @@ export default function ProjectsSection() {
         </aside>
 
         <div className="relative">
-          <div className="absolute -left-4 top-0 hidden h-full w-[1px] bg-[#dfd0b81f] md:block" />
-          <div className="projects-scroll max-h-[640px] space-y-3 overflow-y-auto pr-2">
+          <div className="absolute -left-4 top-0 hidden h-full w-[1px] bg-gradient-to-b from-transparent via-[#dfd0b81f] to-transparent md:block" />
+          <div className="projects-scroll max-h-[640px] space-y-3 overflow-y-auto overscroll-y-contain px-1 py-8 pr-2 [mask-image:linear-gradient(to_bottom,transparent,black_36px,black_calc(100%-36px),transparent)]">
             {projects.map((project) => (
               <ProjectCard
                 key={project.name}
