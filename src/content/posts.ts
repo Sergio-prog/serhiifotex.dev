@@ -5,7 +5,6 @@ export type BlogPost = {
   title: string;
   date: string;
   description: string;
-  tags: string[];
   hidden: boolean;
   body: string;
   readingMinutes: number;
@@ -23,16 +22,11 @@ export const allPosts = Object.entries(postModules)
 
 export const posts = allPosts.filter((post) => !post.hidden);
 
-export const tags = Array.from(new Set(posts.flatMap((post) => post.tags))).sort(
-  (a, b) => a.localeCompare(b)
-);
-
 function parsePost(path: string, source: string): BlogPost {
   const { frontmatter, body } = splitFrontmatter(source);
   const title = readString(frontmatter, "title");
   const date = readString(frontmatter, "date");
   const description = readString(frontmatter, "description");
-  const postTags = readArray(frontmatter, "tags");
   const hidden = readOptionalBoolean(frontmatter, "hidden");
 
   return {
@@ -40,7 +34,6 @@ function parsePost(path: string, source: string): BlogPost {
     title,
     date,
     description,
-    tags: postTags,
     hidden,
     body: body.trim(),
     readingMinutes: estimateReadingMinutes(body),
@@ -68,19 +61,6 @@ function readString(frontmatter: string, key: string) {
   }
 
   return match[1];
-}
-
-function readArray(frontmatter: string, key: string) {
-  const match = frontmatter.match(new RegExp(`^${key}:\\s*\\[(.+)]$`, "m"));
-
-  if (!match) {
-    throw new Error(`Post is missing ${key}`);
-  }
-
-  return match[1]
-    .split(",")
-    .map((tag) => tag.trim().replace(/^"|"$/g, ""))
-    .filter(Boolean);
 }
 
 function readOptionalBoolean(frontmatter: string, key: string) {

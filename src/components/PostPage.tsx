@@ -74,16 +74,6 @@ export default function PostPage({ post }: { post: BlogPost }) {
           <p className="mt-5 text-lg leading-8 text-[#dfd0b8]/68">
             {post.description}
           </p>
-          <div className="mt-6 flex flex-wrap gap-2">
-            {post.tags.map((tag) => (
-              <span
-                key={tag}
-                className="rounded-full border border-[#dfd0b824] px-3 py-1 text-xs font-semibold text-[#dfd0b8]/62"
-              >
-                #{tag}
-              </span>
-            ))}
-          </div>
         </header>
 
         <MarkdownContent source={post.body} />

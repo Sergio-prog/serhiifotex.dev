@@ -1,8 +1,9 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #222831;
+  --foreground: #dfd0b8;
+  color-scheme: dark;
 }
 
 @theme inline {
@@ -54,25 +55,6 @@
   }
 }
 
-/* Dark mode: system preference */
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --background: #222831;
-    --foreground: #dfd0b8;
-  }
-}
-
-/* Manual override via data-theme attribute */
-:root[data-theme="dark"] {
-  --background: #222831 !important;
-  --foreground: #dfd0b8 !important;
-}
-
-:root[data-theme="light"] {
-  --background: #f4e7c5 !important;
-  --foreground: #222831 !important;
-}
-
 html,
 body,
 #root {
@@ -89,32 +71,29 @@ body {
     sans-serif;
 }
 
-.skip-link {
-  position: absolute;
-  top: -100%;
-  left: 0;
-  z-index: 1000;
-  padding: 10px 20px;
-  background: #dfd0b8;
-  color: #222831;
-  font-size: 0.875rem;
-  font-weight: 600;
-  text-decoration: none;
-  transition: top 0.15s ease;
-  border-radius: 0 0 8px 0;
-}
-
-.skip-link:focus {
-  top: 0;
-  outline: 2px solid #f4e7c5;
-  outline-offset: 2px;
-}
-
-/* Focus styles for keyboard users */
 *:focus-visible {
   outline: 2px solid #f4e7c5;
   outline-offset: 2px;
   border-radius: 4px;
+}
+
+::selection {
+  background: #dfd0b8;
+  color: #222831;
+}
+
+.projects-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(223 208 184 / 0.28) transparent;
+}
+
+.projects-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.projects-scroll::-webkit-scrollbar-thumb {
+  background: rgb(223 208 184 / 0.28);
+  border-radius: 999px;
 }
 
 .animate-fall {
