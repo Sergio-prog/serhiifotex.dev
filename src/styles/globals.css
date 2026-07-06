@@ -213,13 +213,10 @@ body {
 }
 
 .post-markdown img {
-  max-height: 420px;
-  width: 100%;
-  border: 1px solid rgb(223 208 184 / 0.16);
+  display: block;
+  max-height: 480px;
+  max-width: 100%;
   border-radius: 1.25rem;
-  background: rgb(57 62 70 / 0.3);
-  object-fit: contain;
-  padding: 1rem;
 }
 
 .post-markdown hr {

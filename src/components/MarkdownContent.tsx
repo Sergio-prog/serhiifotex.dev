@@ -1,4 +1,7 @@
-import { ReactNode } from "react";
+import { ReactNode, useState } from "react";
+import ImageLightbox from "./ImageLightbox";
+
+type ImageBlock = { type: "image"; alt: string; src: string; radius?: string };
 
 type MarkdownBlock =
   | { type: "heading"; level: number; text: string }
@@ -7,7 +10,7 @@ type MarkdownBlock =
   | { type: "unordered-list"; items: string[] }
   | { type: "ordered-list"; items: string[] }
   | { type: "code"; language: string; code: string }
-  | { type: "image"; alt: string; src: string }
+  | ImageBlock
   | { type: "rule" };
 
 export default function MarkdownContent({ source }: { source: string }) {
@@ -66,7 +69,7 @@ function MarkdownBlockView({ block }: { block: MarkdownBlock }) {
   }
 
   if (block.type === "image") {
-    return <img src={block.src} alt={block.alt} loading="lazy" />;
+    return <MarkdownImage block={block} />;
   }
 
   if (block.type === "rule") {
@@ -74,6 +77,36 @@ function MarkdownBlockView({ block }: { block: MarkdownBlock }) {
   }
 
   return <p>{renderInline(block.text)}</p>;
+}
+
+function MarkdownImage({ block }: { block: ImageBlock }) {
+  const [open, setOpen] = useState(false);
+  const radiusStyle = block.radius ? { borderRadius: block.radius } : undefined;
+
+  return (
+    <>
+      <button
+        type="button"
+        onClick={() => setOpen(true)}
+        aria-label={`Open ${block.alt || "image"} in full size`}
+        className="mx-auto block cursor-zoom-in"
+      >
+        <img
+          src={block.src}
+          alt={block.alt}
+          loading="lazy"
+          style={radiusStyle}
+        />
+      </button>
+      {open && (
+        <ImageLightbox
+          src={block.src}
+          alt={block.alt}
+          onClose={() => setOpen(false)}
+        />
+      )}
+    </>
+  );
 }
 
 function parseMarkdown(source: string) {
@@ -104,10 +137,17 @@ function parseMarkdown(source: string) {
       continue;
     }
 
-    const image = line.match(/^!\[(.*)]\((.+)\)$/);
+    const image = line.match(
+      /^!\[(.*)]\(\s*(\S+?)(?:\s+"[^"]*")?\s*\)(?:\{([^}]*)\})?$/
+    );
 
     if (image) {
-      blocks.push({ type: "image", alt: image[1], src: image[2] });
+      blocks.push({
+        type: "image",
+        alt: image[1],
+        src: image[2],
+        radius: parseRadius(image[3]),
+      });
       index += 1;
       continue;
     }
@@ -168,7 +208,11 @@ function parseMarkdown(source: string) {
 
     const paragraphLines: string[] = [];
 
-    while (index < lines.length && lines[index].trim()) {
+    while (
+      index < lines.length &&
+      lines[index].trim() &&
+      !(paragraphLines.length && startsBlock(lines[index]))
+    ) {
       paragraphLines.push(lines[index]);
       index += 1;
     }
@@ -177,6 +221,28 @@ function parseMarkdown(source: string) {
   }
 
   return blocks;
+}
+
+function startsBlock(line: string) {
+  return (
+    line.startsWith("```") ||
+    line.startsWith("> ") ||
+    line.startsWith("![") ||
+    /^#{1,4}\s/.test(line) ||
+    /^---+$/.test(line.trim()) ||
+    /^- /.test(line) ||
+    /^\d+\. /.test(line)
+  );
+}
+
+function parseRadius(attrs?: string) {
+  const match = attrs?.match(/radius\s*[=:]\s*([\d.]+(?:px|rem|em|%)?)/);
+
+  if (!match) {
+    return undefined;
+  }
+
+  return /^[\d.]+$/.test(match[1]) ? `${match[1]}px` : match[1];
 }
 
 function renderInline(text: string): ReactNode[] {

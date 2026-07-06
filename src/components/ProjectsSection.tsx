@@ -3,10 +3,10 @@ import {
   GithubLogoIcon,
   GlobeIcon,
   SparkleIcon,
-  XIcon,
 } from "@phosphor-icons/react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { trackGlow } from "../utils/glow";
+import ImageLightbox from "./ImageLightbox";
 
 interface Project {
   name: string;
@@ -120,8 +120,9 @@ export default function ProjectsSection() {
       </div>
 
       {previewImage?.image && (
-        <ImagePreview
-          project={previewImage}
+        <ImageLightbox
+          src={previewImage.image}
+          alt={`${previewImage.name} preview`}
           onClose={() => setPreviewImage(null)}
         />
       )}
@@ -239,51 +240,3 @@ function ProjectLink({
   );
 }
 
-function ImagePreview({
-  project,
-  onClose,
-}: {
-  project: Project;
-  onClose: () => void;
-}) {
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        onClose();
-      }
-    };
-
-    document.body.style.overflow = "hidden";
-    window.addEventListener("keydown", handleKeyDown);
-
-    return () => {
-      document.body.style.overflow = "";
-      window.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [onClose]);
-
-  return (
-    <div
-      role="dialog"
-      aria-modal="true"
-      aria-label={`${project.name} preview`}
-      onClick={onClose}
-      className="fixed inset-0 z-[100] flex items-center justify-center bg-[#12161c]/85 p-4 backdrop-blur-sm sm:p-10"
-    >
-      <button
-        type="button"
-        onClick={onClose}
-        aria-label="Close preview"
-        className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full border border-[#dfd0b833] bg-[#393E46]/60 text-[#dfd0b8] transition hover:border-[#dfd0b866]"
-      >
-        <XIcon className="h-5 w-5" weight="bold" />
-      </button>
-      <img
-        src={project.image}
-        alt={`${project.name} preview`}
-        onClick={(event) => event.stopPropagation()}
-        className="max-h-full max-w-full rounded-2xl border border-[#dfd0b833] object-contain shadow-2xl"
-      />
-    </div>
-  );
-}
