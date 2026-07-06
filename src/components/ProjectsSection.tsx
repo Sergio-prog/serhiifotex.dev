@@ -31,12 +31,14 @@ const projects: Project[] = [
     image: "/image/projects/reconsearch.png",
   },
   {
-    name: "ultra.convert",
+    name: "Recast",
     description:
-      "Self-hosted file conversion workbench: images, video, audio, archives and PDFs, plus a media downloader, URL screenshots and a private pastebin. Files never leave the machine.",
+      "Self-hosted toolbench, every format you need: file conversion, PDF tools, media downloader, URL screenshots, DNS dig, IP inspector, speed test and a private pastebin. Files never leave your machine.",
     stack: ["TypeScript", "TanStack Start", "Bun", "FFmpeg"],
     createdAt: "2026-07-06",
-    image: "/image/projects/ultra-converter.png",
+    repo: "https://github.com/Sergio-prog/recast",
+    site: "https://recast.serhiifotex.dev",
+    image: "/image/projects/recast.png",
   },
   {
     name: "chainq",
