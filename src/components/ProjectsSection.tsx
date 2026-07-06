@@ -6,6 +6,7 @@ import {
   XIcon,
 } from "@phosphor-icons/react";
 import { useEffect, useState } from "react";
+import { trackGlow } from "../utils/glow";
 
 interface Project {
   name: string;
@@ -53,7 +54,7 @@ const projects: Project[] = [
     stack: ["TypeScript", "React", "BPE"],
     createdAt: "2026-07-06",
     repo: "https://github.com/Sergio-prog/ultra-tokenizer",
-    image: "/image/projects/ultra-tokenizer.svg",
+    image: "/image/projects/ultra-tokenizer.png",
   },
   {
     name: "Fram",
@@ -87,8 +88,8 @@ export default function ProjectsSection() {
       id="projects"
       className="relative overflow-hidden px-4 py-20 sm:px-6 lg:px-8"
     >
-      <div className="pointer-events-none absolute left-1/2 top-10 h-[1px] w-[min(1000px,90vw)] -translate-x-1/2 bg-gradient-to-r from-transparent via-[#dfd0b866] to-transparent" />
-      <div className="mx-auto grid w-full max-w-6xl gap-8 lg:grid-cols-[280px_1fr]">
+      <div className="pointer-events-none absolute left-1/2 top-10 h-[1px] w-[min(1120px,92vw)] -translate-x-1/2 bg-gradient-to-r from-transparent via-[#dfd0b866] to-transparent" />
+      <div className="mx-auto grid w-full max-w-7xl gap-8 lg:grid-cols-[280px_1fr]">
         <aside className="lg:sticky lg:top-12 lg:h-fit">
           <div className="mb-5 flex items-center gap-2 text-xs uppercase tracking-[0.26em] text-[#dfd0b8]/50">
             <SparkleIcon className="h-4 w-4" />
@@ -104,7 +105,7 @@ export default function ProjectsSection() {
 
         <div className="relative">
           <div className="absolute -left-4 top-0 hidden h-full w-[1px] bg-gradient-to-b from-transparent via-[#dfd0b81f] to-transparent md:block" />
-          <div className="projects-scroll max-h-[640px] space-y-3 overflow-y-auto overscroll-y-contain px-1 py-8 pr-2 [mask-image:linear-gradient(to_bottom,transparent,black_36px,black_calc(100%-36px),transparent)]">
+          <div className="projects-scroll max-h-[680px] space-y-3 overflow-y-auto overscroll-y-contain px-1 py-8 pr-2 [mask-image:linear-gradient(to_bottom,transparent,black_36px,black_calc(100%-36px),transparent)]">
             {projects.map((project) => (
               <ProjectCard
                 key={project.name}
@@ -136,13 +137,17 @@ function ProjectCard({
   const primaryLink = project.site ?? project.repo;
 
   return (
-    <article className="group relative flex flex-col gap-4 rounded-[26px] border border-[#dfd0b81f] bg-[#393E46]/25 p-5 transition hover:border-[#dfd0b852] hover:bg-[#393E46]/44 sm:flex-row sm:gap-5">
+    <article
+      onMouseMove={trackGlow}
+      className="glow-card group relative flex flex-col gap-4 rounded-[26px] border border-[#dfd0b81f] bg-[#393E46]/25 p-5 transition duration-200 hover:-translate-y-0.5 hover:border-[#dfd0b852] hover:bg-[#393E46]/44 hover:shadow-lg hover:shadow-black/25 sm:flex-row sm:gap-5"
+    >
+      <div className="glow-overlay" />
       {project.image && (
         <button
           type="button"
           onClick={onPreview}
           aria-label={`Open ${project.name} preview`}
-          className="relative z-10 h-40 w-full shrink-0 cursor-zoom-in overflow-hidden rounded-2xl border border-[#dfd0b81f] bg-[#222831] sm:h-[104px] sm:w-[176px]"
+          className="relative z-10 h-44 w-full shrink-0 cursor-zoom-in overflow-hidden rounded-2xl border border-[#dfd0b81f] bg-[#222831] sm:h-[136px] sm:w-[232px]"
         >
           <img
             src={project.image}
@@ -174,7 +179,9 @@ function ProjectCard({
               new
             </span>
           )}
-          <ArrowSquareOutIcon className="h-4 w-4 shrink-0 text-[#dfd0b8]/0 transition group-hover:text-[#dfd0b8]/55" />
+          {primaryLink && (
+            <ArrowSquareOutIcon className="h-4 w-4 shrink-0 text-[#dfd0b8]/0 transition group-hover:text-[#dfd0b8]/55" />
+          )}
         </div>
 
         <p className="mt-2 max-w-2xl text-sm leading-6 text-[#dfd0b8]/66">

@@ -14,6 +14,7 @@ import PostPage from "./components/PostPage";
 import ProjectsSection from "./components/ProjectsSection";
 import ScrollHint from "./components/ScrollHint";
 import { allPosts } from "./content/posts";
+import { trackGlow } from "./utils/glow";
 
 export default function App() {
   const route = useHashRoute();
@@ -63,15 +64,9 @@ export default function App() {
             <div
               onMouseMove={handleCardMouseMove}
               onMouseLeave={handleCardMouseLeave}
-              className="group/card relative grid w-full grid-cols-1 items-center gap-4 rounded-4xl bg-[#393E46] px-6 py-5 text-left ring-1 ring-[#e1dace40] transition-transform duration-200 ease-out will-change-transform max-md:h-fit max-md:min-h-[180px] sm:grid-cols-2 md:min-h-[90px] md:grid-cols-4 lg:px-4"
+              className="glow-card relative grid w-full grid-cols-1 items-center gap-4 rounded-4xl bg-[#393E46] px-6 py-5 text-left ring-1 ring-[#e1dace40] transition-transform duration-200 ease-out will-change-transform max-md:h-fit max-md:min-h-[180px] sm:grid-cols-2 md:min-h-[90px] md:grid-cols-4 lg:px-4"
             >
-              <div
-                className="pointer-events-none absolute inset-0 rounded-4xl opacity-0 transition-opacity duration-300 group-hover/card:opacity-100"
-                style={{
-                  background:
-                    "radial-gradient(280px circle at var(--glow-x, 50%) var(--glow-y, 50%), rgb(244 231 197 / 0.13), transparent 65%)",
-                }}
-              />
+              <div className="glow-overlay" />
               <img
                 src="/image/reach-me-here.svg"
                 alt="Reach me here"
@@ -144,6 +139,8 @@ export default function App() {
 }
 
 function handleCardMouseMove(event: React.MouseEvent<HTMLDivElement>) {
+  trackGlow(event);
+
   const card = event.currentTarget;
   const rect = card.getBoundingClientRect();
   const x = event.clientX - rect.left;
@@ -151,8 +148,6 @@ function handleCardMouseMove(event: React.MouseEvent<HTMLDivElement>) {
   const tiltX = ((y - rect.height / 2) / rect.height) * -3.5;
   const tiltY = ((x - rect.width / 2) / rect.width) * 3.5;
 
-  card.style.setProperty("--glow-x", `${x}px`);
-  card.style.setProperty("--glow-y", `${y}px`);
   card.style.transform = `perspective(900px) rotateX(${tiltX}deg) rotateY(${tiltY}deg)`;
 }
 

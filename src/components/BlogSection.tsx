@@ -2,6 +2,7 @@ import { ArrowSquareOutIcon, SparkleIcon } from "@phosphor-icons/react";
 import { useState } from "react";
 import { BlogPost, posts } from "../content/posts";
 import { classNames } from "../utils/classnames";
+import { trackGlow } from "../utils/glow";
 
 export default function BlogSection() {
   const [featuredSlug, setFeaturedSlug] = useState(posts[0]?.slug);
@@ -14,8 +15,8 @@ export default function BlogSection() {
       id="posts"
       className="relative min-h-screen overflow-hidden px-4 py-20 sm:px-6 lg:px-8"
     >
-      <div className="pointer-events-none absolute left-1/2 top-10 h-[1px] w-[min(1000px,90vw)] -translate-x-1/2 bg-gradient-to-r from-transparent via-[#dfd0b866] to-transparent" />
-      <div className="mx-auto grid w-full max-w-6xl gap-8 lg:grid-cols-[280px_1fr]">
+      <div className="pointer-events-none absolute left-1/2 top-10 h-[1px] w-[min(1120px,92vw)] -translate-x-1/2 bg-gradient-to-r from-transparent via-[#dfd0b866] to-transparent" />
+      <div className="mx-auto grid w-full max-w-7xl gap-8 lg:grid-cols-[280px_1fr]">
         <aside className="lg:sticky lg:top-12 lg:h-fit">
           <div className="mb-5 flex items-center gap-2 text-xs uppercase tracking-[0.26em] text-[#dfd0b8]/50">
             <SparkleIcon className="h-4 w-4" />
@@ -64,16 +65,18 @@ function PostRow({
       <a
         href={`#/posts/${post.slug}`}
         className={classNames(
-          "group relative grid w-full gap-4 rounded-[26px] border p-5 pr-20 text-left transition md:grid-cols-[124px_minmax(0,1fr)_auto] md:pr-5",
+          "glow-card group relative grid w-full gap-4 rounded-[26px] border p-5 pr-20 text-left transition duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-black/25 md:grid-cols-[124px_minmax(0,1fr)_auto] md:pr-5",
           selected
             ? "border-[#dfd0b86b] bg-[#dfd0b812]"
             : "border-[#dfd0b81f] bg-[#393E46]/25 hover:border-[#dfd0b852] hover:bg-[#393E46]/44"
         )}
         id={post.slug}
         onMouseEnter={onFocus}
+        onMouseMove={trackGlow}
         onFocus={onFocus}
         style={{ animationDelay: `${index * 65}ms` }}
       >
+        <div className="glow-overlay" />
         <time className="whitespace-nowrap text-sm font-semibold tabular-nums text-[#dfd0b8]/52">
           {formatDate(post.date)}
         </time>
