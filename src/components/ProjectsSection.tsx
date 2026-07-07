@@ -2,6 +2,7 @@ import {
   ArrowSquareOutIcon,
   GithubLogoIcon,
   GlobeIcon,
+  PackageIcon,
   SparkleIcon,
 } from "@phosphor-icons/react";
 import { useState } from "react";
@@ -15,6 +16,7 @@ interface Project {
   createdAt: string;
   repo?: string;
   site?: string;
+  pypi?: string;
   image?: string;
 }
 
@@ -47,6 +49,8 @@ const projects: Project[] = [
     stack: ["Python", "CLI", "EVM + Solana"],
     createdAt: "2026-07-02",
     repo: "https://github.com/Sergio-prog/chainq",
+    site: "https://chainq.serhiifotex.dev",
+    pypi: "https://pypi.org/project/chainq/",
     image: "/image/projects/chainq.svg",
   },
   {
@@ -65,6 +69,7 @@ const projects: Project[] = [
     stack: ["Python", "FastAPI", "aiogram", "FFmpeg"],
     createdAt: "2026-05-16",
     repo: "https://github.com/Sergio-prog/fram",
+    site: "https://fram.serhiifotex.dev",
     image: "/image/projects/fram.png",
   },
   {
@@ -209,6 +214,12 @@ function ProjectCard({
               <ProjectLink href={project.site} label={`${project.name} website`}>
                 <GlobeIcon className="h-3.5 w-3.5" />
                 Visit
+              </ProjectLink>
+            )}
+            {project.pypi && (
+              <ProjectLink href={project.pypi} label={`${project.name} on PyPI`}>
+                <PackageIcon className="h-3.5 w-3.5" />
+                PyPI
               </ProjectLink>
             )}
           </span>
