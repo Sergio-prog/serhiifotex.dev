@@ -18,6 +18,7 @@ interface Project {
   site?: string;
   pypi?: string;
   image?: string;
+  archived?: boolean;
 }
 
 const NEW_BADGE_DAYS = 10;
@@ -31,6 +32,16 @@ const projects: Project[] = [
     createdAt: "2026-04-20",
     site: "https://reconsear.ch",
     image: "/image/projects/reconsearch.png",
+  },
+  {
+    name: "Fram",
+    description:
+      "Media editing toolkit with one Python core and three faces: a CLI with interactive TUI, an HTTP API, and a Telegram bot. Crop, compress, convert, cut — same pipeline everywhere.",
+    stack: ["Python", "FastAPI", "aiogram", "FFmpeg"],
+    createdAt: "2026-05-16",
+    repo: "https://github.com/Sergio-prog/fram",
+    site: "https://fram.serhiifotex.dev",
+    image: "/image/projects/fram.png",
   },
   {
     name: "Recast",
@@ -56,21 +67,13 @@ const projects: Project[] = [
   {
     name: "Ultra Tokenizer",
     description:
-      "Token counter for GPT, Claude, Gemini, DeepSeek and friends. Pick a model, paste your text, read the count — everything runs in the browser, nothing gets uploaded.",
+      "Token counter for GPT, Claude, Gemini, DeepSeek and friends. Pick a model, paste your text, read the count — everything runs in the browser, nothing gets uploaded. Merged into Recast, lives there now.",
     stack: ["TypeScript", "React", "BPE"],
     createdAt: "2026-07-06",
     repo: "https://github.com/Sergio-prog/ultra-tokenizer",
+    site: "https://recast.serhiifotex.dev/tokenizer",
     image: "/image/projects/ultra-tokenizer.png",
-  },
-  {
-    name: "Fram",
-    description:
-      "Media editing toolkit with one Python core and three faces: a CLI with interactive TUI, an HTTP API, and a Telegram bot. Crop, compress, convert, cut — same pipeline everywhere.",
-    stack: ["Python", "FastAPI", "aiogram", "FFmpeg"],
-    createdAt: "2026-05-16",
-    repo: "https://github.com/Sergio-prog/fram",
-    site: "https://fram.serhiifotex.dev",
-    image: "/image/projects/fram.png",
+    archived: true,
   },
   {
     name: "Finance Tracker",
@@ -161,7 +164,7 @@ function ProjectCard({
             src={project.image}
             alt={`${project.name} preview`}
             loading="lazy"
-            className="h-full w-full object-cover transition duration-300 group-hover:scale-[1.03]"
+            className="h-full w-full object-cover"
           />
         </button>
       )}
@@ -182,10 +185,16 @@ function ProjectCard({
               project.name
             )}
           </h3>
-          {isNew(project.createdAt) && (
-            <span className="rounded-full bg-[#f4e7c5] px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-[#222831]">
-              new
+          {project.archived ? (
+            <span className="rounded-full border border-[#dfd0b833] px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-[#dfd0b8]/55">
+              archived
             </span>
+          ) : (
+            isNew(project.createdAt) && (
+              <span className="rounded-full bg-[#f4e7c5] px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-[#222831]">
+                new
+              </span>
+            )
           )}
           {primaryLink && (
             <ArrowSquareOutIcon className="h-4 w-4 shrink-0 text-[#dfd0b8]/0 transition group-hover:text-[#dfd0b8]/55" />
