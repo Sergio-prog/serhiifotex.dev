@@ -6,20 +6,83 @@ import {
   ReadCvLogoIcon,
   XLogoIcon,
 } from "@phosphor-icons/react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 import BlogSection from "./components/BlogSection";
 import LinkButton from "./components/LinkButton";
+import MatrixRain from "./components/MatrixRain";
 import PostPage from "./components/PostPage";
 import ProjectsSection from "./components/ProjectsSection";
 import ScrollHint from "./components/ScrollHint";
 import { allPosts } from "./content/posts";
 import { trackGlow } from "./utils/glow";
 
+const KONAMI_SEQUENCE = [
+  "arrowup",
+  "arrowup",
+  "arrowdown",
+  "arrowdown",
+  "arrowleft",
+  "arrowright",
+  "arrowleft",
+  "arrowright",
+  "b",
+  "a",
+];
+
 export default function App() {
   const route = useHashRoute();
   const postSlug = route.match(/^\/posts\/(.+)$/)?.[1];
   const post = allPosts.find((item) => item.slug === postSlug);
+  const [storm, setStorm] = useState(false);
+  const comicTimeout = useRef(0);
+
+  useEffect(() => {
+    let konamiProgress = 0;
+    let typedBuffer = "";
+    let stormTimeout = 0;
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      const key = event.key.toLowerCase();
+
+      if (key === KONAMI_SEQUENCE[konamiProgress]) {
+        konamiProgress += 1;
+      } else {
+        konamiProgress = key === KONAMI_SEQUENCE[0] ? 1 : 0;
+      }
+
+      if (konamiProgress === KONAMI_SEQUENCE.length) {
+        konamiProgress = 0;
+        setStorm(true);
+        toast("Wake up, Neo...", {
+          toastId: "konami",
+          autoClose: 2500,
+          hideProgressBar: true,
+        });
+        window.clearTimeout(stormTimeout);
+        stormTimeout = window.setTimeout(() => setStorm(false), 8000);
+      }
+
+      if (key.length === 1) {
+        typedBuffer = (typedBuffer + key).slice(-4);
+
+        if (typedBuffer === "sudo") {
+          typedBuffer = "";
+          toast.error(
+            "user is not in the sudoers file. This incident will be reported.",
+            { toastId: "sudo", autoClose: 3000, hideProgressBar: true }
+          );
+        }
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      window.clearTimeout(stormTimeout);
+    };
+  }, []);
 
   useEffect(() => {
     const handleKeyPress = (event: KeyboardEvent) => {
@@ -45,6 +108,19 @@ export default function App() {
     };
   }, []);
 
+  const handleLazySignClick = () => {
+    document.body.classList.add("comic-mode");
+    toast("happy now? :)", {
+      toastId: "comic",
+      autoClose: 2000,
+      hideProgressBar: true,
+    });
+    window.clearTimeout(comicTimeout.current);
+    comicTimeout.current = window.setTimeout(() => {
+      document.body.classList.remove("comic-mode");
+    }, 4000);
+  };
+
   if (post) {
     return <PostPage post={post} />;
   }
@@ -52,6 +128,7 @@ export default function App() {
   return (
     <main className="relative min-h-screen w-full overflow-x-hidden">
       <section className="relative h-screen w-full">
+        <MatrixRain storm={storm} />
         <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform">
           <div className="relative w-screen px-4 text-center lg:w-[890px]">
             <h1 className="absolute -top-[142px] left-1/2 w-full -translate-x-1/2 transform text-nowrap text-[36px] font-bold md:text-[48px] lg:text-[64px]">
@@ -121,7 +198,10 @@ export default function App() {
               </LinkButton>
             </div>
             <div className="relative mt-1">
-              <p className="bg-gradient-to-b from-[#393E46]/50 to-[#393E46]/20 bg-clip-text text-transparent [-webkit-background-clip:text] [-webkit-text-fill-color:transparent]">
+              <p
+                onClick={handleLazySignClick}
+                className="select-none bg-gradient-to-b from-[#393E46]/50 to-[#393E46]/20 bg-clip-text text-transparent [-webkit-background-clip:text] [-webkit-text-fill-color:transparent]"
+              >
                 I`m too lazy to make a good design. sry {":)"}
               </p>
             </div>

@@ -5,6 +5,9 @@ import { ToastContainer } from "react-toastify";
 import "react-tooltip/dist/react-tooltip.css";
 import "./styles/globals.css";
 import App from "./App";
+import { printConsoleGreeting } from "./utils/consoleGreeting";
+
+printConsoleGreeting();
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>

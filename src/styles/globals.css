@@ -71,6 +71,11 @@ body {
     sans-serif;
 }
 
+.comic-mode,
+.comic-mode * {
+  font-family: "Comic Sans MS", "Comic Sans", cursive !important;
+}
+
 *:focus-visible {
   outline: 2px solid #f4e7c5;
   outline-offset: 2px;
