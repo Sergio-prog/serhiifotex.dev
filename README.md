@@ -29,8 +29,8 @@
 
 - **Profile section** — name, role, and quick-access links (GitHub, X/Twitter,
   Discord, LinkedIn, CV)
-- **Blog** — markdown-based posts with tag filtering, reading time estimates,
-  and a permalink system via URL hash
+- **Blog** — markdown-based posts with reading time estimates, served from real
+  permalinks (`/posts/<slug>`) and prerendered to static HTML at build time
 - **RSS feed** — `/feed.xml`, generated at build time from `src/posts/`
 - **Responsive** — works great on mobile and desktop
 - **Dark mode** — respects `prefers-color-scheme` with a warm dark palette
@@ -46,6 +46,7 @@
 | **Styling**  | [Tailwind CSS v4](https://tailwindcss.com)                                  |
 | **Icons**    | [Phosphor Icons](https://phosphoricons.com)                                 |
 | **Content**  | Markdown files with frontmatter, loaded via Vite glob imports               |
+| **Rendering**| Prerendered to static HTML at build (`react-dom/server`), hydrated on load  |
 | **Analytics**| [Vercel Analytics](https://vercel.com/analytics) (privacy-friendly)          |
 | **Deploy**   | [Vercel](https://vercel.com)                                                |
 
@@ -74,14 +75,16 @@ Add a `.md` file to `src/posts/` with frontmatter:
 title: "My New Post"
 date: "2026-06-02"
 description: "A short description"
-tags: ["personal", "tech"]
 hidden: false
 ---
 
 Your content here...
 ```
 
-Set `hidden: true` to keep a draft unpublished.
+The post is published at `/posts/my-new-post` — the slug comes from the filename.
+
+Set `hidden: true` to keep a draft off the homepage, the RSS feed, and the
+sitemap. It stays reachable at its URL for previewing and is marked `noindex`.
 
 ## 🧹 Lint
 

@@ -4,6 +4,7 @@ import { readdirSync, readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { join } from "node:path";
 import { collectPosts, type BlogPost } from "./src/content/parsePost";
+import { postPath } from "./src/routes";
 
 const SITE_URL = "https://serhiifotex.dev";
 const SITE_TITLE = "Serhii Nesterov";
@@ -31,7 +32,7 @@ function escapeXml(value: string) {
 }
 
 function postUrl(post: BlogPost) {
-  return `${SITE_URL}/#/posts/${post.slug}`;
+  return `${SITE_URL}${postPath(post.slug)}`;
 }
 
 function renderFeed(posts: BlogPost[]) {
@@ -41,7 +42,7 @@ function renderFeed(posts: BlogPost[]) {
         "    <item>",
         `      <title>${escapeXml(post.title)}</title>`,
         `      <link>${escapeXml(postUrl(post))}</link>`,
-        `      <guid isPermaLink="false">${escapeXml(postUrl(post))}</guid>`,
+        `      <guid isPermaLink="true">${escapeXml(postUrl(post))}</guid>`,
         `      <pubDate>${new Date(post.date).toUTCString()}</pubDate>`,
         `      <description>${escapeXml(post.description)}</description>`,
         "    </item>",
@@ -66,15 +67,26 @@ function renderFeed(posts: BlogPost[]) {
 }
 
 function renderSitemap(posts: BlogPost[]) {
-  const lastmod = posts[0]?.date;
+  const urls = [
+    { loc: `${SITE_URL}/`, lastmod: posts[0]?.date },
+    ...posts.map((post) => ({ loc: postUrl(post), lastmod: post.date })),
+  ];
+
+  const entries = urls
+    .map((url) =>
+      [
+        "  <url>",
+        `    <loc>${escapeXml(url.loc)}</loc>`,
+        ...(url.lastmod ? [`    <lastmod>${url.lastmod}</lastmod>`] : []),
+        "  </url>",
+      ].join("\n")
+    )
+    .join("\n");
 
   return [
     '<?xml version="1.0" encoding="UTF-8"?>',
     '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
-    "  <url>",
-    `    <loc>${SITE_URL}/</loc>`,
-    ...(lastmod ? [`    <lastmod>${lastmod}</lastmod>`] : []),
-    "  </url>",
+    entries,
     "</urlset>",
     "",
   ].join("\n");
@@ -102,6 +114,6 @@ function contentFeeds(): Plugin {
   };
 }
 
-export default defineConfig({
-  plugins: [react(), contentFeeds()],
-});
+export default defineConfig(({ isSsrBuild }) => ({
+  plugins: [react(), ...(isSsrBuild ? [] : [contentFeeds()])],
+}));

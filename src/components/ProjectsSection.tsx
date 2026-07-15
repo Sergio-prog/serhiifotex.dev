@@ -5,7 +5,7 @@ import {
   PackageIcon,
   SparkleIcon,
 } from "@phosphor-icons/react";
-import { useState } from "react";
+import { useState, useSyncExternalStore } from "react";
 import { trackGlow } from "../utils/glow";
 import ImageLightbox from "./ImageLightbox";
 
@@ -90,8 +90,19 @@ function isNew(createdAt: string) {
   return Date.now() - new Date(createdAt).getTime() < NEW_BADGE_DAYS * 86_400_000;
 }
 
+const subscribeToNothing = () => () => {};
+
+function useHydrated() {
+  return useSyncExternalStore(
+    subscribeToNothing,
+    () => true,
+    () => false
+  );
+}
+
 export default function ProjectsSection() {
   const [previewImage, setPreviewImage] = useState<Project | null>(null);
+  const hydrated = useHydrated();
 
   return (
     <section
@@ -120,6 +131,7 @@ export default function ProjectsSection() {
               <ProjectCard
                 key={project.name}
                 project={project}
+                showNew={hydrated && isNew(project.createdAt)}
                 onPreview={() => setPreviewImage(project)}
               />
             ))}
@@ -140,9 +152,11 @@ export default function ProjectsSection() {
 
 function ProjectCard({
   project,
+  showNew,
   onPreview,
 }: {
   project: Project;
+  showNew: boolean;
   onPreview: () => void;
 }) {
   const primaryLink = project.site ?? project.repo;
@@ -190,7 +204,7 @@ function ProjectCard({
               archived
             </span>
           ) : (
-            isNew(project.createdAt) && (
+            showNew && (
               <span className="rounded-full bg-[#f4e7c5] px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-[#222831]">
                 new
               </span>
