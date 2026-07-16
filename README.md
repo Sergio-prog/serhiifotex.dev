@@ -31,6 +31,7 @@
   Discord, LinkedIn, CV)
 - **Blog** — markdown-based posts with tag filtering, reading time estimates,
   and a permalink system via URL hash
+- **RSS feed** — `/feed.xml`, generated at build time from `src/posts/`
 - **Responsive** — works great on mobile and desktop
 - **Dark mode** — respects `prefers-color-scheme` with a warm dark palette
 - **Radial hover glow** — subtle mouse-tracking border effect on link cards
