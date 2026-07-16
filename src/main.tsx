@@ -1,18 +1,19 @@
-import { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
-import { Analytics } from "@vercel/analytics/react";
-import { ToastContainer } from "react-toastify";
+import { hydrateRoot } from "react-dom/client";
 import "react-tooltip/dist/react-tooltip.css";
 import "./styles/globals.css";
-import App from "./App";
+import Root from "./Root";
+import { legacyHashSlug, postPath } from "./routes";
 import { printConsoleGreeting } from "./utils/consoleGreeting";
 
 printConsoleGreeting();
 
-createRoot(document.getElementById("root")!).render(
-  <StrictMode>
-    <App />
-    <ToastContainer />
-    <Analytics />
-  </StrictMode>
-);
+const legacySlug = legacyHashSlug(window.location.hash);
+
+if (legacySlug) {
+  window.location.replace(postPath(legacySlug));
+} else {
+  hydrateRoot(
+    document.getElementById("root")!,
+    <Root path={window.location.pathname} />
+  );
+}

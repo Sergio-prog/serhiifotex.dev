@@ -1,6 +1,7 @@
 import { ArrowSquareOutIcon, SparkleIcon } from "@phosphor-icons/react";
 import { useState } from "react";
 import { BlogPost, posts } from "../content/posts";
+import { postPath } from "../routes";
 import { classNames } from "../utils/classnames";
 import { trackGlow } from "../utils/glow";
 
@@ -63,7 +64,7 @@ function PostRow({
   return (
     <li>
       <a
-        href={`#/posts/${post.slug}`}
+        href={postPath(post.slug)}
         className={classNames(
           "glow-card group relative grid w-full gap-4 rounded-[26px] border p-5 pr-20 text-left transition duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-black/25 md:grid-cols-[124px_minmax(0,1fr)_auto] md:pr-5",
           selected

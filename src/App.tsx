@@ -15,6 +15,7 @@ import PostPage from "./components/PostPage";
 import ProjectsSection from "./components/ProjectsSection";
 import ScrollHint from "./components/ScrollHint";
 import { allPosts } from "./content/posts";
+import { postSlugFromPath } from "./routes";
 import { trackGlow } from "./utils/glow";
 
 const KONAMI_SEQUENCE = [
@@ -30,9 +31,8 @@ const KONAMI_SEQUENCE = [
   "a",
 ];
 
-export default function App() {
-  const route = useHashRoute();
-  const postSlug = route.match(/^\/posts\/(.+)$/)?.[1];
+export default function App({ path }: { path: string }) {
+  const postSlug = postSlugFromPath(path);
   const post = allPosts.find((item) => item.slug === postSlug);
   const [storm, setStorm] = useState(false);
   const comicTimeout = useRef(0);
@@ -233,30 +233,4 @@ function handleCardMouseMove(event: React.MouseEvent<HTMLDivElement>) {
 
 function handleCardMouseLeave(event: React.MouseEvent<HTMLDivElement>) {
   event.currentTarget.style.transform = "";
-}
-
-function useHashRoute() {
-  const [route, setRoute] = useState(() =>
-    window.location.hash.replace(/^#/, "")
-  );
-
-  useEffect(() => {
-    const handleHashChange = () => {
-      const nextRoute = window.location.hash.replace(/^#/, "");
-
-      setRoute(nextRoute);
-
-      if (nextRoute.startsWith("/posts/")) {
-        window.scrollTo({ top: 0 });
-      }
-    };
-
-    window.addEventListener("hashchange", handleHashChange);
-
-    return () => {
-      window.removeEventListener("hashchange", handleHashChange);
-    };
-  }, []);
-
-  return route;
 }
