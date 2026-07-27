@@ -224,14 +224,6 @@ export default function App({ path }: { path: string }) {
                 zIndex: 200,
               }}
             />
-            <div className="relative mt-1">
-              <p
-                onClick={handleLazySignClick}
-                className="select-none bg-gradient-to-b from-[#393E46]/50 to-[#393E46]/20 bg-clip-text text-transparent [-webkit-background-clip:text] [-webkit-text-fill-color:transparent]"
-              >
-                I`m too lazy to make a good design. sry {":)"}
-              </p>
-            </div>
           </div>
         </div>
         <ScrollHint />
@@ -239,7 +231,14 @@ export default function App({ path }: { path: string }) {
       <ProjectsSection />
       <BlogSection />
       <footer className="px-4 pb-10 pt-6 text-center text-xs text-[#dfd0b8]/35">
-        © {new Date().getFullYear()} Serhii Nesterov
+        <button
+          type="button"
+          onClick={handleLazySignClick}
+          className="select-none text-[#dfd0b8]/25 transition hover:text-[#dfd0b8]/45"
+        >
+          I`m too lazy to make a good design. sry {":)"}
+        </button>
+        <p className="mt-2">© {new Date().getFullYear()} Serhii Nesterov</p>
       </footer>
     </main>
   );
