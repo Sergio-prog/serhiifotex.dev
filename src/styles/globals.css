@@ -87,20 +87,6 @@ body {
   color: #222831;
 }
 
-.projects-scroll {
-  scrollbar-width: thin;
-  scrollbar-color: rgb(223 208 184 / 0.28) transparent;
-}
-
-.projects-scroll::-webkit-scrollbar {
-  width: 6px;
-}
-
-.projects-scroll::-webkit-scrollbar-thumb {
-  background: rgb(223 208 184 / 0.28);
-  border-radius: 999px;
-}
-
 .glow-overlay {
   pointer-events: none;
   position: absolute;

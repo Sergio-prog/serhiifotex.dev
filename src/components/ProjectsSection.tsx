@@ -126,16 +126,17 @@ export default function ProjectsSection() {
 
         <div className="relative">
           <div className="absolute -left-4 top-0 hidden h-full w-[1px] bg-gradient-to-b from-transparent via-[#dfd0b81f] to-transparent md:block" />
-          <div className="projects-scroll max-h-[680px] space-y-3 overflow-y-auto overscroll-y-contain px-1 py-8 pr-2 [mask-image:linear-gradient(to_bottom,transparent,black_36px,black_calc(100%-36px),transparent)]">
+          <ul className="space-y-3">
             {projects.map((project) => (
-              <ProjectCard
-                key={project.name}
-                project={project}
-                showNew={hydrated && isNew(project.createdAt)}
-                onPreview={() => setPreviewImage(project)}
-              />
+              <li key={project.name}>
+                <ProjectCard
+                  project={project}
+                  showNew={hydrated && isNew(project.createdAt)}
+                  onPreview={() => setPreviewImage(project)}
+                />
+              </li>
             ))}
-          </div>
+          </ul>
         </div>
       </div>
 
