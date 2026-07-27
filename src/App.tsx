@@ -8,6 +8,7 @@ import {
 } from "@phosphor-icons/react";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
+import { Tooltip } from "react-tooltip";
 import BlogSection from "./components/BlogSection";
 import LinkButton from "./components/LinkButton";
 import MatrixRain from "./components/MatrixRain";
@@ -202,6 +203,17 @@ export default function App({ path }: { path: string }) {
                 <ReadCvLogoIcon className="h-7 w-7 duration-150 group-hover:-rotate-10 group-hover:animate-(--animate-small-bounce) lg:h-8 lg:w-8" />
               </LinkButton>
             </div>
+            <Tooltip
+              id="link-button"
+              opacity="50%"
+              noArrow
+              style={{
+                paddingLeft: "12px",
+                paddingRight: "12px",
+                borderRadius: "6px",
+                zIndex: 200,
+              }}
+            />
             <div className="relative mt-1">
               <p
                 onClick={handleLazySignClick}
