@@ -89,8 +89,15 @@ export default function LinkButton({
     );
   }
 
+  const isMailto = link.startsWith("mailto:");
+
   return (
-    <a {...shellProps} href={link} target="_blank" rel={relFor(link)}>
+    <a
+      {...shellProps}
+      href={link}
+      target={isMailto ? undefined : "_blank"}
+      rel={relFor(link)}
+    >
       {content}
     </a>
   );

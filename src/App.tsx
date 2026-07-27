@@ -1,5 +1,6 @@
 import {
   DiscordLogoIcon,
+  EnvelopeSimpleIcon,
   GithubLogoIcon,
   LinkedinLogoIcon,
   QuestionIcon,
@@ -147,7 +148,7 @@ export default function App({ path }: { path: string }) {
             <div
               onMouseMove={handleCardMouseMove}
               onMouseLeave={handleCardMouseLeave}
-              className="glow-card relative grid w-full grid-cols-1 items-center gap-4 rounded-4xl bg-[#393E46] px-6 py-5 text-left ring-1 ring-[#e1dace40] transition-transform duration-200 ease-out will-change-transform max-md:h-fit max-md:min-h-[180px] sm:grid-cols-2 md:min-h-[90px] md:grid-cols-4 lg:px-4"
+              className="glow-card relative grid w-full grid-cols-1 items-center gap-4 rounded-4xl bg-[#393E46] px-6 py-5 text-left ring-1 ring-[#e1dace40] transition-transform duration-200 ease-out will-change-transform max-md:h-fit max-md:min-h-[180px] sm:grid-cols-2 md:min-h-[90px] md:grid-cols-3 lg:px-4"
             >
               <div className="glow-overlay" />
               <img
@@ -157,6 +158,15 @@ export default function App({ path }: { path: string }) {
                 width={326}
                 className="pointer-events-none absolute right-[710px] top-[40px] hidden xl:block"
               />
+              <LinkButton
+                className="group justify-center md:justify-start"
+                text="Email me"
+                link="mailto:serhii.nesterov3@gmail.com"
+                tooltip="serhii.nesterov3@gmail.com"
+              >
+                <EnvelopeSimpleIcon className="h-7 w-7 group-hover:animate-(--animate-small-bounce) lg:h-8 lg:w-8" />
+              </LinkButton>
+
               <LinkButton
                 className="group justify-center md:justify-start"
                 text="Sergio-prog"
