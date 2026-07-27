@@ -11,11 +11,12 @@ import { toast } from "react-toastify";
 import BlogSection from "./components/BlogSection";
 import LinkButton from "./components/LinkButton";
 import MatrixRain from "./components/MatrixRain";
+import NotFound from "./components/NotFound";
 import PostPage from "./components/PostPage";
 import ProjectsSection from "./components/ProjectsSection";
 import ScrollHint from "./components/ScrollHint";
 import { allPosts } from "./content/posts";
-import { postSlugFromPath } from "./routes";
+import { isHomePath, postSlugFromPath } from "./routes";
 import { trackGlow } from "./utils/glow";
 
 const KONAMI_SEQUENCE = [
@@ -123,6 +124,10 @@ export default function App({ path }: { path: string }) {
 
   if (post) {
     return <PostPage post={post} />;
+  }
+
+  if (!isHomePath(path)) {
+    return <NotFound />;
   }
 
   return (

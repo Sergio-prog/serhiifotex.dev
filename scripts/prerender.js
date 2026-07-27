@@ -75,6 +75,14 @@ const pages = [
     noindex: false,
   },
   ...allPosts.map(pageFor),
+  {
+    path: "/404",
+    url: `${SITE_URL}/404`,
+    title: "Nothing lives here — Serhii Nesterov",
+    description: "This page was moved, renamed, or never existed.",
+    type: "website",
+    noindex: true,
+  },
 ];
 
 const template = readFileSync(join(DIST, "index.html"), "utf8");
