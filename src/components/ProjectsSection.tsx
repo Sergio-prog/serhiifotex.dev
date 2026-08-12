@@ -34,6 +34,16 @@ const projects: Project[] = [
     image: "/image/projects/reconsearch.png",
   },
   {
+    name: "Nowsee",
+    description:
+      "Live visualizer for whatever your Mac is playing. It taps the output mix, so Spotify, a call or a game all work the same. Lives in the menu bar — six modes, ten palettes, no dock icon, no account.",
+    stack: ["Swift 6", "SwiftUI", "Metal", "macOS"],
+    createdAt: "2026-07-30",
+    repo: "https://github.com/Sergio-prog/Nowsee",
+    site: "https://nowsee.serhiifotex.dev",
+    image: "/image/projects/nowsee.png",
+  },
+  {
     name: "Fram",
     description:
       "Media editing toolkit with one Python core and three faces: a CLI with interactive TUI, an HTTP API, and a Telegram bot. Crop, compress, convert, cut — same pipeline everywhere.",
@@ -63,17 +73,6 @@ const projects: Project[] = [
     site: "https://chainq.serhiifotex.dev",
     pypi: "https://pypi.org/project/chainq/",
     image: "/image/projects/chainq.svg",
-  },
-  {
-    name: "Ultra Tokenizer",
-    description:
-      "Token counter for GPT, Claude, Gemini, DeepSeek and friends. Pick a model, paste your text, read the count — everything runs in the browser, nothing gets uploaded. Merged into Recast, lives there now.",
-    stack: ["TypeScript", "React", "BPE"],
-    createdAt: "2026-07-06",
-    repo: "https://github.com/Sergio-prog/ultra-tokenizer",
-    site: "https://recast.serhiifotex.dev/tokenizer",
-    image: "/image/projects/ultra-tokenizer.png",
-    archived: true,
   },
   {
     name: "Finance Tracker",
