@@ -25,7 +25,7 @@ fram gif input.mp4 --fps 12 --width 480 -o clip.gif
 
 Running just `fram` opens an interactive TUI instead — image previews right in the terminal, sliders for parameters. For when you don't remember the flags.
 
-![preview of TUI](https://github.com/Sergio-prog/fram/blob/main/media/preview.png?raw=true "Preview of TUI")
+![preview of TUI](/image/posts/fram-tui.png "Preview of TUI")
 
 ## Installing
 Install with the script (MacOS/Linux-like):
