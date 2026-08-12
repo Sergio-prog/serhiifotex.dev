@@ -1,4 +1,8 @@
-import { ArrowSquareOutIcon, SparkleIcon } from "@phosphor-icons/react";
+import {
+  ArrowSquareOutIcon,
+  SparkleIcon,
+  XLogoIcon,
+} from "@phosphor-icons/react";
 import { useState } from "react";
 import { BlogPost, posts } from "../content/posts";
 import { postPath } from "../routes";
@@ -78,9 +82,21 @@ function PostRow({
         style={{ animationDelay: `${index * 65}ms` }}
       >
         <div className="glow-overlay" />
-        <time className="whitespace-nowrap text-sm font-semibold tabular-nums text-[#dfd0b8]/52">
-          {formatDate(post.date)}
-        </time>
+        <div className="flex items-center gap-2 self-start text-sm font-semibold text-[#dfd0b8]/52">
+          <time className="whitespace-nowrap tabular-nums">
+            {formatDate(post.date)}
+          </time>
+          {post.xPost && (
+            <span
+              role="img"
+              aria-label="Originally posted on X"
+              title="Originally posted on X"
+              className="inline-flex shrink-0"
+            >
+              <XLogoIcon className="h-3.5 w-3.5" />
+            </span>
+          )}
+        </div>
         <div>
           <div className="flex items-start gap-2">
             <h3 className="text-2xl font-bold leading-tight text-[#dfd0b8]">

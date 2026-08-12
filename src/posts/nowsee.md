@@ -2,6 +2,7 @@
 title: "Nowsee — see what your Mac is playing"
 date: "2026-08-12"
 description: "I wanted to watch the music I'm listening to, so I built a visualizer for it"
+xPost: "https://x.com/0xFotex/status/2087670382174097771"
 ---
 
 I wanted to see the music I'm listening to, so I built Nowsee — a live visualizer that sits in your Mac's menu bar.

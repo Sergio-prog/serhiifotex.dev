@@ -1,4 +1,4 @@
-import { ArrowLeftIcon, ClockIcon } from "@phosphor-icons/react";
+import { ArrowLeftIcon, ClockIcon, XLogoIcon } from "@phosphor-icons/react";
 import { BlogPost } from "../content/posts";
 import MarkdownContent from "./MarkdownContent";
 
@@ -24,6 +24,20 @@ export default function PostPage({ post }: { post: BlogPost }) {
               <ClockIcon className="h-4 w-4" />
               {post.readingMinutes} min
             </span>
+            {post.xPost && (
+              <>
+                <span className="h-1 w-1 rounded-full bg-[#dfd0b8]/35" />
+                <a
+                  href={post.xPost}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-full border border-[#dfd0b824] px-2.5 py-1 text-xs font-semibold transition hover:border-[#dfd0b866] hover:text-[#dfd0b8]"
+                >
+                  <XLogoIcon className="h-3.5 w-3.5" />
+                  originally on X
+                </a>
+              </>
+            )}
           </div>
           <h1 className="text-4xl font-bold leading-tight sm:text-6xl">
             {post.title}

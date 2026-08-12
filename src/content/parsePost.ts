@@ -4,6 +4,7 @@ export type BlogPost = {
   date: string;
   description: string;
   hidden: boolean;
+  xPost?: string;
   body: string;
   readingMinutes: number;
 };
@@ -20,6 +21,7 @@ function parsePost(path: string, source: string): BlogPost {
   const date = readString(frontmatter, "date");
   const description = readString(frontmatter, "description");
   const hidden = readOptionalBoolean(frontmatter, "hidden");
+  const xPost = readOptionalString(frontmatter, "xPost");
 
   return {
     slug: path.split("/").pop()?.replace(/\.md$/, "") ?? title,
@@ -27,6 +29,7 @@ function parsePost(path: string, source: string): BlogPost {
     date,
     description,
     hidden,
+    xPost,
     body: body.trim(),
     readingMinutes: estimateReadingMinutes(body),
   };
@@ -53,6 +56,10 @@ function readString(frontmatter: string, key: string) {
   }
 
   return match[1];
+}
+
+function readOptionalString(frontmatter: string, key: string) {
+  return frontmatter.match(new RegExp(`^${key}:\\s*"(.+)"$`, "m"))?.[1];
 }
 
 function readOptionalBoolean(frontmatter: string, key: string) {
