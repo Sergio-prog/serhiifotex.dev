@@ -2,6 +2,7 @@ import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { allPosts, render } from "../dist-ssr/entry-server.js";
+import { renderOgImage } from "./og-image.js";
 
 const ROOT = fileURLToPath(new URL("..", import.meta.url));
 const DIST = join(ROOT, "dist");
@@ -45,6 +46,11 @@ function applyMeta(template, page) {
   html = setMeta(html, "name", "twitter:title", page.title);
   html = setMeta(html, "name", "twitter:description", page.description);
 
+  if (page.ogImage) {
+    html = setMeta(html, "property", "og:image", `${SITE_URL}${page.ogImage}`);
+    html = setMeta(html, "name", "twitter:image", `${SITE_URL}${page.ogImage}`);
+  }
+
   const head = [`<link rel="canonical" href="${page.url}" />`];
 
   if (page.noindex) {
@@ -62,6 +68,8 @@ function pageFor(post) {
     description: post.description,
     type: "article",
     noindex: post.hidden,
+    ogImage: `/og/${post.slug}.png`,
+    og: { title: post.title, description: post.description, eyebrow: "Serhii Nesterov" },
   };
 }
 
@@ -75,6 +83,14 @@ const pages = [
     noindex: false,
   },
   ...allPosts.map(pageFor),
+  {
+    path: "/404",
+    url: `${SITE_URL}/404`,
+    title: "Nothing lives here — Serhii Nesterov",
+    description: "This page was moved, renamed, or never existed.",
+    type: "website",
+    noindex: true,
+  },
 ];
 
 const template = readFileSync(join(DIST, "index.html"), "utf8");
@@ -94,5 +110,13 @@ for (const page of pages) {
 
   mkdirSync(dirname(file), { recursive: true });
   writeFileSync(file, html);
+
+  if (page.og) {
+    const image = join(DIST, page.ogImage);
+
+    mkdirSync(dirname(image), { recursive: true });
+    writeFileSync(image, await renderOgImage(page.og));
+  }
+
   console.log(`prerendered ${page.path}`);
 }

@@ -1,5 +1,6 @@
 import {
   DiscordLogoIcon,
+  EnvelopeSimpleIcon,
   GithubLogoIcon,
   LinkedinLogoIcon,
   QuestionIcon,
@@ -8,14 +9,16 @@ import {
 } from "@phosphor-icons/react";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
+import { Tooltip } from "react-tooltip";
 import BlogSection from "./components/BlogSection";
 import LinkButton from "./components/LinkButton";
 import MatrixRain from "./components/MatrixRain";
+import NotFound from "./components/NotFound";
 import PostPage from "./components/PostPage";
 import ProjectsSection from "./components/ProjectsSection";
 import ScrollHint from "./components/ScrollHint";
 import { allPosts } from "./content/posts";
-import { postSlugFromPath } from "./routes";
+import { isHomePath, postSlugFromPath } from "./routes";
 import { trackGlow } from "./utils/glow";
 
 const KONAMI_SEQUENCE = [
@@ -125,6 +128,10 @@ export default function App({ path }: { path: string }) {
     return <PostPage post={post} />;
   }
 
+  if (!isHomePath(path)) {
+    return <NotFound />;
+  }
+
   return (
     <main className="relative min-h-screen w-full overflow-x-hidden">
       <section className="relative h-screen w-full">
@@ -141,7 +148,7 @@ export default function App({ path }: { path: string }) {
             <div
               onMouseMove={handleCardMouseMove}
               onMouseLeave={handleCardMouseLeave}
-              className="glow-card relative grid w-full grid-cols-1 items-center gap-4 rounded-4xl bg-[#393E46] px-6 py-5 text-left ring-1 ring-[#e1dace40] transition-transform duration-200 ease-out will-change-transform max-md:h-fit max-md:min-h-[180px] sm:grid-cols-2 md:min-h-[90px] md:grid-cols-4 lg:px-4"
+              className="glow-card relative grid w-full grid-cols-1 items-center gap-4 rounded-4xl bg-[#393E46] px-6 py-5 text-left ring-1 ring-[#e1dace40] transition-transform duration-200 ease-out will-change-transform max-md:h-fit max-md:min-h-[180px] sm:grid-cols-2 md:min-h-[90px] md:grid-cols-3 lg:px-4"
             >
               <div className="glow-overlay" />
               <img
@@ -151,6 +158,15 @@ export default function App({ path }: { path: string }) {
                 width={326}
                 className="pointer-events-none absolute right-[710px] top-[40px] hidden xl:block"
               />
+              <LinkButton
+                className="group justify-center md:justify-start"
+                text="Email me"
+                link="mailto:serhii.nesterov3@gmail.com"
+                tooltip="serhii.nesterov3@gmail.com"
+              >
+                <EnvelopeSimpleIcon className="h-7 w-7 group-hover:animate-(--animate-small-bounce) lg:h-8 lg:w-8" />
+              </LinkButton>
+
               <LinkButton
                 className="group justify-center md:justify-start"
                 text="Sergio-prog"
@@ -197,14 +213,17 @@ export default function App({ path }: { path: string }) {
                 <ReadCvLogoIcon className="h-7 w-7 duration-150 group-hover:-rotate-10 group-hover:animate-(--animate-small-bounce) lg:h-8 lg:w-8" />
               </LinkButton>
             </div>
-            <div className="relative mt-1">
-              <p
-                onClick={handleLazySignClick}
-                className="select-none bg-gradient-to-b from-[#393E46]/50 to-[#393E46]/20 bg-clip-text text-transparent [-webkit-background-clip:text] [-webkit-text-fill-color:transparent]"
-              >
-                I`m too lazy to make a good design. sry {":)"}
-              </p>
-            </div>
+            <Tooltip
+              id="link-button"
+              opacity="50%"
+              noArrow
+              style={{
+                paddingLeft: "12px",
+                paddingRight: "12px",
+                borderRadius: "6px",
+                zIndex: 200,
+              }}
+            />
           </div>
         </div>
         <ScrollHint />
@@ -212,7 +231,14 @@ export default function App({ path }: { path: string }) {
       <ProjectsSection />
       <BlogSection />
       <footer className="px-4 pb-10 pt-6 text-center text-xs text-[#dfd0b8]/35">
-        © {new Date().getFullYear()} Serhii Nesterov
+        <button
+          type="button"
+          onClick={handleLazySignClick}
+          className="select-none text-[#dfd0b8]/25 transition hover:text-[#dfd0b8]/45"
+        >
+          I`m too lazy to make a good design. sry {":)"}
+        </button>
+        <p className="mt-2">© {new Date().getFullYear()} Serhii Nesterov</p>
       </footer>
     </main>
   );
