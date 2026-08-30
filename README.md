@@ -13,8 +13,8 @@
     <strong>Software engineer · Smart contract & backend developer.</strong>
   </p>
   <p>
-    Minimalist portfolio with a blog, CV, and contact links — built as a
-    single-page app, served fast.
+    Personal portfolio with selected projects, engineering notes, a CV, and
+    contact links — prerendered for fast navigation and shareable pages.
   </p>
   <p>
     <a href="https://serhiifotex.dev"><strong>🌐 Live site »</strong></a>
@@ -29,6 +29,8 @@
 
 - **Profile section** — name, role, and quick-access links (GitHub, X/Twitter,
   Discord, LinkedIn, CV)
+- **Project showcase** — live products, open-source tools, screenshots, and
+  direct links to each available site and repository
 - **Blog** — markdown-based posts with reading time estimates, served from real
   permalinks (`/posts/<slug>`) and prerendered to static HTML at build time
 - **RSS feed** — `/feed.xml`, generated at build time from `src/posts/`
@@ -36,6 +38,8 @@
 - **Dark mode** — respects `prefers-color-scheme` with a warm dark palette
 - **Radial hover glow** — subtle mouse-tracking border effect on link cards
 - **Keyboard easter egg** — try <kbd>⌘/Ctrl</kbd> + <kbd>S</kbd>
+- **Ambient Matrix rain** — canvas animation that respects reduced-motion and
+  remains stable while mobile browser chrome changes during scrolling
 
 ## 🛠️ Tech Stack
 
