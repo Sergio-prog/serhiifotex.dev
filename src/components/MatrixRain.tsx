@@ -18,24 +18,40 @@ export default function MatrixRain({ storm = false }: { storm?: boolean }) {
 
     const stepMs = storm ? 42 : 90;
     const brightChance = storm ? 0.18 : 0.1;
+    const hasCoarsePointer = window.matchMedia("(pointer: coarse)").matches;
 
     let drops: number[] = [];
     let columns = 0;
+    let canvasWidth = 0;
+    let canvasHeight = 0;
 
     const resize = () => {
-      const dpr = window.devicePixelRatio || 1;
-      const width = canvas.clientWidth;
-      const height = canvas.clientHeight;
+      const nextWidth = Math.round(canvas.clientWidth);
+      const nextHeight = Math.round(canvas.clientHeight);
 
-      canvas.width = width * dpr;
-      canvas.height = height * dpr;
+      if (!nextWidth || !nextHeight) return;
+
+      // Mobile Safari reports resize events while its browser chrome expands and
+      // collapses during a touch scroll. Re-sizing the canvas in response clears
+      // it and used to randomize every drop, which looked like a full refresh.
+      if (hasCoarsePointer && canvasWidth === nextWidth) return;
+
+      const dpr = window.devicePixelRatio || 1;
+      const previousDrops = drops;
+
+      canvas.width = nextWidth * dpr;
+      canvas.height = nextHeight * dpr;
       context.setTransform(dpr, 0, 0, dpr, 0, 0);
       context.font = `${FONT_SIZE}px monospace`;
-      columns = Math.ceil(width / FONT_SIZE);
+      columns = Math.ceil(nextWidth / FONT_SIZE);
       drops = Array.from(
         { length: columns },
-        () => Math.random() * -(height / FONT_SIZE)
+        (_, index) =>
+          previousDrops[index] ??
+          Math.random() * -(nextHeight / FONT_SIZE)
       );
+      canvasWidth = nextWidth;
+      canvasHeight = nextHeight;
     };
 
     resize();
@@ -51,7 +67,7 @@ export default function MatrixRain({ storm = false }: { storm?: boolean }) {
       last = time;
 
       context.fillStyle = "rgba(34, 40, 49, 0.18)";
-      context.fillRect(0, 0, canvas.clientWidth, canvas.clientHeight);
+      context.fillRect(0, 0, canvasWidth, canvasHeight);
 
       for (let i = 0; i < columns; i++) {
         const glyph = GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
@@ -63,7 +79,7 @@ export default function MatrixRain({ storm = false }: { storm?: boolean }) {
             : "rgba(223, 208, 184, 0.5)";
         context.fillText(glyph, i * FONT_SIZE, y);
 
-        if (y > canvas.clientHeight && Math.random() > 0.97) {
+        if (y > canvasHeight && Math.random() > 0.97) {
           drops[i] = 0;
         }
 
