@@ -3,9 +3,11 @@ import {
   GithubLogoIcon,
   GlobeIcon,
   PackageIcon,
+  SnowflakeIcon,
   SparkleIcon,
 } from "@phosphor-icons/react";
 import { useState, useSyncExternalStore } from "react";
+import { classNames } from "../utils/classnames";
 import { trackGlow } from "../utils/glow";
 import ImageLightbox from "./ImageLightbox";
 
@@ -18,12 +20,41 @@ interface Project {
   site?: string;
   pypi?: string;
   image?: string;
-  archived?: boolean;
+  status?: "frozen" | "archived";
 }
 
 const NEW_BADGE_DAYS = 10;
 
 const projects: Project[] = [
+  {
+    name: "chainq",
+    description:
+      "One CLI for the crypto world — built for AI agents, pleasant for humans. Prices, balances, gas, DeFi protocols and Hyperliquid perps from a single tool, zero API keys.",
+    stack: ["Python", "CLI", "EVM + Solana"],
+    createdAt: "2026-07-02",
+    repo: "https://github.com/Sergio-prog/chainq",
+    site: "https://chainq.serhiifotex.dev",
+    pypi: "https://pypi.org/project/chainq/",
+    image: "/image/projects/chainq.svg",
+  },
+  {
+    name: "Ghosttype",
+    description:
+      "Font and theme picker for Ghostty. It renders inline specimens through the Kitty graphics protocol, previews every built-in theme, and applies either with one key and a live reload.",
+    stack: ["TypeScript", "Bun", "Terminal UI", "macOS"],
+    createdAt: "2026-08-30",
+    repo: "https://github.com/Sergio-prog/ghosttype",
+    image: "/image/projects/ghosttype.png",
+  },
+  {
+    name: "HYPE Console",
+    description:
+      "Hyperliquid market intelligence built from public, real data: HYPE buybacks, ETF flows, TWAPs, staking, team wallets, and live account executions over interactive candles.",
+    stack: ["TypeScript", "TanStack Start", "Bun", "Hyperliquid"],
+    createdAt: "2026-07-21",
+    site: "https://hype-console.serhiifotex.dev",
+    image: "/image/projects/hype-console.png",
+  },
   {
     name: "ReconSearch",
     description:
@@ -32,6 +63,7 @@ const projects: Project[] = [
     createdAt: "2026-04-20",
     site: "https://reconsear.ch",
     image: "/image/projects/reconsearch.png",
+    status: "frozen",
   },
   {
     name: "Nowsee",
@@ -64,23 +96,13 @@ const projects: Project[] = [
     image: "/image/projects/recast.png",
   },
   {
-    name: "chainq",
-    description:
-      "One CLI for the crypto world — built for AI agents, pleasant for humans. Prices, balances, gas, DeFi protocols and Hyperliquid perps from a single tool, zero API keys.",
-    stack: ["Python", "CLI", "EVM + Solana"],
-    createdAt: "2026-07-02",
-    repo: "https://github.com/Sergio-prog/chainq",
-    site: "https://chainq.serhiifotex.dev",
-    pypi: "https://pypi.org/project/chainq/",
-    image: "/image/projects/chainq.svg",
-  },
-  {
     name: "Finance Tracker",
     description:
       "Self-hosted personal finance tracker: expenses, income and subscriptions with charts and customizable themes.",
     stack: ["TypeScript", "React", "Node.js"],
     createdAt: "2026-05-27",
     repo: "https://github.com/Sergio-prog/finance-tracker",
+    site: "https://finance.serhiifotex.dev",
     image: "/image/projects/finance-tracker.png",
   },
 ];
@@ -164,7 +186,12 @@ function ProjectCard({
   return (
     <article
       onMouseMove={trackGlow}
-      className="glow-card group relative flex flex-col gap-4 rounded-[26px] border border-[#dfd0b81f] bg-[#393E46]/25 p-5 transition duration-200 hover:-translate-y-0.5 hover:border-[#dfd0b852] hover:bg-[#393E46]/44 hover:shadow-lg hover:shadow-black/25 sm:flex-row sm:gap-5"
+      className={classNames(
+        "glow-card group relative flex flex-col gap-4 rounded-[26px] border p-5 transition duration-200 hover:-translate-y-0.5 hover:shadow-lg sm:flex-row sm:gap-5",
+        project.status === "frozen"
+          ? "frozen-card border-[#9dc6d833] bg-[#2b3943]/42 hover:border-[#b8dce966] hover:bg-[#30424d]/54 hover:shadow-[#0b1b24]/35"
+          : "border-[#dfd0b81f] bg-[#393E46]/25 hover:border-[#dfd0b852] hover:bg-[#393E46]/44 hover:shadow-black/25"
+      )}
     >
       <div className="glow-overlay" />
       {project.image && (
@@ -178,7 +205,12 @@ function ProjectCard({
             src={project.image}
             alt={`${project.name} preview`}
             loading="lazy"
-            className="h-full w-full object-cover"
+            className={classNames(
+              "h-full w-full object-cover",
+              project.status === "frozen"
+                ? "saturate-[.4] contrast-[.9]"
+                : ""
+            )}
           />
         </button>
       )}
@@ -199,17 +231,7 @@ function ProjectCard({
               project.name
             )}
           </h3>
-          {project.archived ? (
-            <span className="rounded-full border border-[#dfd0b833] px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-[#dfd0b8]/55">
-              archived
-            </span>
-          ) : (
-            showNew && (
-              <span className="rounded-full bg-[#f4e7c5] px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-[#222831]">
-                new
-              </span>
-            )
-          )}
+          <ProjectStatus status={project.status} showNew={showNew} />
           {primaryLink && (
             <ArrowSquareOutIcon className="h-4 w-4 shrink-0 text-[#dfd0b8]/0 transition group-hover:text-[#dfd0b8]/55" />
           )}
@@ -252,6 +274,39 @@ function ProjectCard({
   );
 }
 
+function ProjectStatus({
+  status,
+  showNew,
+}: {
+  status?: Project["status"];
+  showNew: boolean;
+}) {
+  if (status === "frozen") {
+    return (
+      <span className="inline-flex items-center gap-1 rounded-full border border-[#b8dce966] bg-[#a8d8ef]/8 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-[#c7e7f2]/80">
+        <SnowflakeIcon className="h-3 w-3" />
+        frozen
+      </span>
+    );
+  }
+
+  if (status === "archived") {
+    return (
+      <span className="rounded-full border border-[#dfd0b833] px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-[#dfd0b8]/55">
+        archived
+      </span>
+    );
+  }
+
+  if (!showNew) return null;
+
+  return (
+    <span className="rounded-full bg-[#f4e7c5] px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-[#222831]">
+      new
+    </span>
+  );
+}
+
 function ProjectLink({
   href,
   label,
@@ -273,4 +328,3 @@ function ProjectLink({
     </a>
   );
 }
-
