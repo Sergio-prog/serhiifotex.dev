@@ -40,7 +40,7 @@ const projects: Project[] = [
   {
     name: "Price Bird",
     description:
-      "Telegram bot for price alerts on tokens, CEX pairs, market caps and NFT floors. Send /alert BTC 10% and it messages you when BTC moves 10%. Speaks English, Ukrainian and Russian.",
+      "Telegram bot for price alerts on tokens, CEX pairs, market caps and NFT floors. Send /alert BTC 10% and it messages you when BTC moves 10%.",
     stack: ["Python", "aiogram", "PostgreSQL", "Redis"],
     createdAt: "2026-05-12",
     repo: "https://github.com/Sergio-prog/price-bird",
