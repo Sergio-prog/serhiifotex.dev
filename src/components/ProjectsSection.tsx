@@ -38,6 +38,15 @@ const projects: Project[] = [
     image: "/image/projects/chainq.svg",
   },
   {
+    name: "Price Bird",
+    description:
+      "Telegram bot for price alerts on tokens, CEX pairs, market caps and NFT floors. Send /alert BTC 10% and it messages you when BTC moves 10%. Speaks English, Ukrainian and Russian.",
+    stack: ["Python", "aiogram", "PostgreSQL", "Redis"],
+    createdAt: "2026-05-12",
+    repo: "https://github.com/Sergio-prog/price-bird",
+    image: "/image/projects/price-bird.png",
+  },
+  {
     name: "Ghosttype",
     description:
       "Font and theme picker for Ghostty. It renders inline specimens through the Kitty graphics protocol, previews every built-in theme, and applies either with one key and a live reload.",
